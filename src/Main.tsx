@@ -21,6 +21,8 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 20,
+    fontFamily: 'Raleway-Light',
+    // fontWeight: 800,
   },
 });
 
