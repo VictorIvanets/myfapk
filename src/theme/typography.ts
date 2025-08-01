@@ -1,0 +1,84 @@
+export const typography = {
+  h1: {
+    fontSize: 48,
+    fontFamily: 'Raleway-Regular',
+    lineHeight: 48,
+  },
+  h2: {
+    fontSize: 40,
+    fontFamily: 'Raleway-Light',
+    lineHeight: 40,
+  },
+  h3: {
+    fontSize: 32,
+    fontFamily: 'Raleway-Light',
+    lineHeight: 38,
+  },
+  h4: {
+    fontSize: 24,
+    fontFamily: 'Raleway-Regular',
+    lineHeight: 29,
+  },
+  headline: {
+    fontSize: 20,
+    fontFamily: 'Raleway-Regular',
+    lineHeight: 24,
+  },
+  body: {
+    fontSize: 16,
+    fontFamily: 'Raleway-Regular',
+    lineHeight: 24,
+  },
+  subtitle: {
+    fontSize: 14,
+    fontFamily: 'Raleway-Regular',
+    lineHeight: 21,
+  },
+  caption: {
+    fontSize: 10,
+    fontFamily: 'Raleway-Regular',
+    lineHeight: 15,
+  },
+
+  Bh1: {
+    fontSize: 48,
+    fontFamily: 'Raleway-Bold',
+  },
+  Bh2: {
+    fontSize: 40,
+    fontFamily: 'Raleway-Bold',
+    lineHeight: 40,
+  },
+  Bh3: {
+    fontSize: 32,
+    fontFamily: 'Raleway-Bold',
+    lineHeight: 38,
+  },
+  Bh4: {
+    fontSize: 24,
+    fontFamily: 'Raleway-Bold',
+    lineHeight: 29,
+  },
+  Bheadline: {
+    fontSize: 20,
+    fontFamily: 'Raleway-Bold',
+    lineHeight: 24,
+  },
+  Bbody: {
+    fontSize: 16,
+    fontFamily: 'Raleway-Bold',
+    lineHeight: 24,
+  },
+  Bsubtitle: {
+    fontSize: 14,
+    fontFamily: 'Raleway-Bold',
+    lineHeight: 21,
+  },
+  Bcaption: {
+    fontSize: 10,
+    fontFamily: 'Raleway-Bold',
+    lineHeight: 15,
+  },
+} as const;
+
+export type TypographyT = keyof typeof typography;

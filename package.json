@@ -9,13 +9,16 @@
     "start": "react-native start",
     "test": "jest",
     "build:android": "cd android && gradlew.bat assembleRelease",
-    "reset": "cd android && gradlew.bat clean"
+    "reset": "cd android && gradlew.bat clean",
+    "resetassets": "npx react-native-asset && npx react-native start --reset-cache && npx react-native run-android"
   },
   "dependencies": {
     "@react-native/new-app-screen": "0.80.2",
+    "@react-navigation/native": "^7.1.16",
     "react": "19.1.0",
     "react-native": "0.80.2",
-    "react-native-navigation-bar-color": "^2.0.2"
+    "react-native-navigation-bar-color": "^2.0.2",
+    "react-native-reanimated": "^3.12.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

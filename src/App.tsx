@@ -1,16 +1,20 @@
-import { StatusBar, StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
 import Main from './Main';
-import { COLOR } from './constants';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import { COLOR } from './theme/colors';
+import Flex from './components/Flex';
+import { NavigationContainer } from '@react-navigation/native';
 
 changeNavigationBarColor(COLOR.MAIN, false);
 
 function App() {
   return (
-    <View style={styles.container}>
+    <Flex style={styles.container}>
       <StatusBar backgroundColor={COLOR.MAIN} barStyle={'light-content'} />
-      <Main />
-    </View>
+      <NavigationContainer>
+        <Main />
+      </NavigationContainer>
+    </Flex>
   );
 }
 

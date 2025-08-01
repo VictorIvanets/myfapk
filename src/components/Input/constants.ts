@@ -1,0 +1,1 @@
+// export const INPUT_HORIZONTAL_PADDING = 12;
