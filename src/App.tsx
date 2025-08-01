@@ -1,18 +1,37 @@
+import React, { useRef } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
-import Main from './Main';
-import changeNavigationBarColor from 'react-native-navigation-bar-color';
-import { COLOR } from './theme/colors';
-import Flex from './components/Flex';
+import type { NavigationContainerRef } from '@react-navigation/native';
 import { NavigationContainer } from '@react-navigation/native';
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import { COLOR, colors } from './theme/colors';
+import Flex from './components/Flex';
+import type { RootStackParamListT } from './types/route';
+import Navigator from './Navigatior';
 
 changeNavigationBarColor(COLOR.MAIN, false);
 
 function App() {
+  const routeNameRef = useRef<string | undefined>(undefined);
+  const navigationRef =
+    useRef<NavigationContainerRef<RootStackParamListT>>(null);
+
   return (
     <Flex style={styles.container}>
-      <StatusBar backgroundColor={COLOR.MAIN} barStyle={'light-content'} />
-      <NavigationContainer>
-        <Main />
+      <StatusBar backgroundColor={COLOR.MAIN} barStyle="light-content" />
+      <NavigationContainer
+        ref={navigationRef}
+        onReady={() => {
+          routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
+        }}
+        onStateChange={() => {
+          const currentRouteName =
+            navigationRef.current?.getCurrentRoute()?.name;
+          if (currentRouteName && routeNameRef.current !== currentRouteName) {
+            routeNameRef.current = currentRouteName;
+          }
+        }}
+      >
+        <Navigator />
       </NavigationContainer>
     </Flex>
   );
@@ -21,6 +40,7 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.MAIN,
   },
 });
 

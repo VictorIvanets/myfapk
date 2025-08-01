@@ -4,10 +4,16 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import type { ViewProps } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import type { JSX } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
+import { colors } from 'src/theme/colors';
 
-const FadeInView = ({ style, ...props }: ViewProps): JSX.Element => {
+const FadeInView = ({
+  style,
+  children,
+  ...props
+}: ViewProps & { children: React.ReactNode }): JSX.Element => {
   const opacity = useSharedValue(0);
 
   useFocusEffect(() => {
@@ -20,9 +26,25 @@ const FadeInView = ({ style, ...props }: ViewProps): JSX.Element => {
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
+    backgroundColor: colors.MAIN,
   }));
 
-  return <Animated.View {...props} style={[style, animatedStyle]} />;
+  return (
+    <View style={[styles.container, { backgroundColor: colors.MAIN }]}>
+      <Animated.View
+        {...props}
+        style={[styles.container, animatedStyle, style]}
+      >
+        {children}
+      </Animated.View>
+    </View>
+  );
 };
 
 export default FadeInView;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

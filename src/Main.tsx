@@ -6,8 +6,12 @@ import Loader from './components/Loader';
 import Button from './components/Button';
 import FadeInView from 'src/components/FadeInView';
 import InputText from './components/InputText/InputText';
+import { useAppNavigation } from './hooks/useAppNavigation';
+import { colors } from './theme/colors';
 
 const Main = () => {
+  const navigation = useAppNavigation();
+
   return (
     <FadeInView style={styles.container}>
       <Flex center flex>
@@ -32,6 +36,11 @@ const Main = () => {
       </Flex>
       <InputText />
       <Button onPress={() => console.log('press1')} title="Button" />
+      <Button
+        title="Перейти на Home"
+        onPress={() => navigation.navigate('Home')}
+      />
+
       <Loader />
     </FadeInView>
   );
@@ -42,6 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: colors.MAIN,
   },
   text: {
     color: 'white',
