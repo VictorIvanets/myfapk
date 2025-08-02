@@ -14,7 +14,12 @@ export type RootHomeTabsParamListT = {
 };
 
 export type RootStackParamListT = {
-  HomeTabs: undefined;
+  HomeTabs:
+    | undefined
+    | {
+        screen?: keyof RootHomeTabsParamListT;
+      };
+  Login: undefined;
 };
 
 export type SceneProps = Parameters<ReturnType<typeof SceneMap>>[number];

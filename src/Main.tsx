@@ -35,7 +35,7 @@ const Main = () => {
         <Button view="max" title="Maximum" /> */}
       </Flex>
       <InputText />
-      <Button onPress={() => console.log('press1')} title="Button" />
+      <Button onPress={() => navigation.navigate('Login')} title="Login" />
       <Button
         title="Перейти на Home"
         onPress={() => navigation.navigate('Home')}

@@ -22,6 +22,7 @@ module.exports = {
     'react-native/no-inline-styles': 'error',
     'react-native/no-unused-styles': 'warn',
     'import/no-unresolved': 'off',
+    'react/no-unstable-nested-components': 'off',
 
     // 'prettier/prettier': [
     //   'error',
