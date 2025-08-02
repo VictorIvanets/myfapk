@@ -10,7 +10,7 @@ export type NavigationStateRoute = NavigationState['routes'][number];
 
 export type RootHomeTabsParamListT = {
   Home: undefined;
-  Main: undefined;
+  Map: undefined;
 };
 
 export type RootStackParamListT = {
@@ -22,6 +22,7 @@ export type RootStackParamListT = {
   Login: undefined;
   Splash: undefined;
   Details: { name: string; userId: string };
+  Registration: undefined;
 };
 
 export type SceneProps = Parameters<ReturnType<typeof SceneMap>>[number];

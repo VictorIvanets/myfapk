@@ -1,21 +1,43 @@
 // Navigator.tsx
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from 'src/screens/Home';
+import Home from 'src/screens/Home/Home';
 import type {
   RootHomeTabsParamListT,
   RootStackParamListT,
-} from 'src/types/route';
-import Main from 'src/Main';
+} from 'src/Navigatior/route';
+import Map from 'src/screens/Map/Map';
 import { colors } from 'src/theme/colors';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Login from 'src/screens/Login';
-import Splash from 'src/screens/AppLoader';
-import Details from 'src/screens/Details';
+import Login from 'src/screens/Login/Login';
+import Splash from 'src/screens/AppLoader/AppLoader';
+import Details from 'src/screens/Details/Details';
+import Registration from 'src/screens/Registration/Registration';
 
 const Stack = createStackNavigator<RootStackParamListT>();
 const Tabs = createBottomTabNavigator<RootHomeTabsParamListT>();
+
+const Navigator = (): React.JSX.Element => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Splash"
+      screenOptions={{
+        headerShown: false,
+        cardStyle: {
+          backgroundColor: colors.MAIN,
+        },
+      }}
+    >
+      <Stack.Screen name="Splash" component={Splash} />
+      <Stack.Screen name="HomeTabs" component={HomeTabs} />
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Details" component={Details} />
+      <Stack.Screen name="Registration" component={Registration} />
+      {/* Інші Stack-екрани типу Login, Splash, тощо можна додати тут */}
+    </Stack.Navigator>
+  );
+};
 
 const HomeTabs = () => {
   return (
@@ -45,8 +67,8 @@ const HomeTabs = () => {
         }}
       />
       <Tabs.Screen
-        name="Main"
-        component={Main}
+        name="Map"
+        component={Map}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="fish" size={size} color={color} />
@@ -54,26 +76,6 @@ const HomeTabs = () => {
         }}
       />
     </Tabs.Navigator>
-  );
-};
-
-const Navigator = (): React.JSX.Element => {
-  return (
-    <Stack.Navigator
-      initialRouteName="Splash"
-      screenOptions={{
-        headerShown: false,
-        cardStyle: {
-          backgroundColor: colors.MAIN,
-        },
-      }}
-    >
-      <Stack.Screen name="Splash" component={Splash} />
-      <Stack.Screen name="HomeTabs" component={HomeTabs} />
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Details" component={Details} />
-      {/* Інші Stack-екрани типу Login, Splash, тощо можна додати тут */}
-    </Stack.Navigator>
   );
 };
 

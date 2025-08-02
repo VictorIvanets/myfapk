@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <Text>Home</Text>
-      <Button title="Main" onPress={() => navigation.navigate('Main')} />
+      <Button title="Main" onPress={() => navigation.navigate('Map')} />
     </View>
   );
 };

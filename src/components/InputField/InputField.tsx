@@ -1,7 +1,15 @@
-// InputField.tsx
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import type { TextInputProps } from 'react-native';
-import { TextInput, View, Text, StyleSheet, Platform } from 'react-native';
+import {
+  TextInput,
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
+import { colors } from 'src/theme/colors';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 type BaseProps = {
   label?: string;
@@ -23,15 +31,20 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
       ibackground = false,
       heightArea = 150,
       multiline = false,
+      secureTextEntry,
       style,
       ...rest
     },
     ref,
   ) => {
     const dynamicStyles = {
-      backgroundColor: ibackground ? '#ffffff1d' : undefined,
+      backgroundColor: ibackground ? colors.SECOND : undefined,
       height: multiline ? heightArea : 48,
       textAlignVertical: multiline ? ('top' as const) : ('center' as const),
+    };
+    const [isHidden, setIsHidden] = useState(!!secureTextEntry);
+    const toggleVisibility = () => {
+      setIsHidden(prev => !prev);
     };
 
     return (
@@ -45,7 +58,8 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
         <TextInput
           ref={ref}
           placeholder=" "
-          placeholderTextColor="#999"
+          placeholderTextColor={colors.SECOND50}
+          secureTextEntry={secureTextEntry ? isHidden : false}
           multiline={multiline}
           style={[
             styles.input,
@@ -55,6 +69,15 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
           ]}
           {...rest}
         />
+        {secureTextEntry && (
+          <TouchableOpacity onPress={toggleVisibility} style={styles.eyeButton}>
+            {isHidden ? (
+              <Ionicons name="eye-off-outline" size={20} color="#999" />
+            ) : (
+              <Ionicons name="eye-outline" size={20} color="#999" />
+            )}
+          </TouchableOpacity>
+        )}
 
         {error && <Text style={styles.errorMessage}>{error}</Text>}
       </View>
@@ -74,12 +97,12 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: colors.ACCENT,
     borderRadius: 6,
     paddingHorizontal: 12,
-    color: 'white',
+    color: colors.TEXT,
     fontSize: 16,
-    backgroundColor: '#00000048',
+    backgroundColor: colors.SECOND,
     ...Platform.select({
       ios: {
         paddingVertical: 12,
@@ -90,20 +113,25 @@ const styles = StyleSheet.create({
     }),
   },
   inputError: {
-    borderColor: 'red',
-    color: 'red',
+    borderColor: colors.RED,
+    color: colors.RED,
   },
   label: {
-    color: 'white',
+    color: colors.TEXT,
     marginBottom: 4,
     fontSize: 14,
   },
   labelError: {
-    color: 'red',
+    color: colors.RED,
   },
   errorMessage: {
-    color: 'red',
+    color: colors.RED,
     fontSize: 12,
     marginTop: 4,
+  },
+  eyeButton: {
+    position: 'absolute',
+    right: 12,
+    top: 37,
   },
 });

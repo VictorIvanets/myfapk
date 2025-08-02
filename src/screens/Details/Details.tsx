@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import Button from 'src/components/Button';
 import Text from 'src/components/Text';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';
-import type { RootStackParamListT } from 'src/types/route';
+import type { RootStackParamListT } from 'src/Navigatior/route';
 
 type Props = StackScreenProps<RootStackParamListT, 'Details'>;
 

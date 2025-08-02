@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import type {
   RootStackParamListT,
   RootHomeTabsParamListT,
-} from 'src/types/route';
+} from 'src/Navigatior/route';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { StackNavigationProp } from '@react-navigation/stack';
 

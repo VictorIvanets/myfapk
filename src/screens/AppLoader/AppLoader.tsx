@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import type { RootStackParamListT } from 'src/types/route';
+import type { RootStackParamListT } from 'src/Navigatior/route';
 import { colors } from 'src/theme/colors';
 
 type NavigationT = StackNavigationProp<RootStackParamListT>;
@@ -32,21 +32,22 @@ const Splash = () => {
   }, [navigation]);
 
   return (
-    <View
-      // eslint-disable-next-line react-native/no-inline-styles
-      style={{
-        flex: 1,
-        backgroundColor: colors.MAIN,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <View style={styles.container}>
       <ActivityIndicator size={150} color={colors.ACCENT} />
     </View>
   );
 };
 
 export default Splash;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.MAIN,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 // const token = await AsyncStorage.getItem('jwt');
 

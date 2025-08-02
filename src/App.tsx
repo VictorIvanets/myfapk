@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { COLOR, colors } from './theme/colors';
 import Flex from './components/Flex';
-import type { RootStackParamListT } from './types/route';
+import type { RootStackParamListT } from './Navigatior/route';
 import Navigator from './Navigatior';
 
 changeNavigationBarColor(COLOR.MAIN, false);

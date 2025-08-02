@@ -1,15 +1,15 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import Flex from './components/Flex';
-import Text from './components/Text';
-import Loader from './components/Loader';
-import Button from './components/Button';
+import Flex from '../../components/Flex';
+import Text from '../../components/Text';
+import Loader from '../../components/Loader';
+import Button from '../../components/Button';
 import FadeInView from 'src/components/FadeInView';
-import InputText from './components/InputText/InputText';
-import { useAppNavigation } from './hooks/useAppNavigation';
-import { colors } from './theme/colors';
+import InputText from '../../components/InputText/InputText';
+import { useAppNavigation } from '../../hooks/useAppNavigation';
+import { colors } from '../../theme/colors';
 
-const Main = () => {
+const Map = () => {
   const navigation = useAppNavigation();
 
   const data = {
@@ -70,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Main;
+export default Map;

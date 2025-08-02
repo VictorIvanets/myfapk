@@ -1,16 +1,16 @@
 export const typography = {
   h1: {
-    fontSize: 48,
+    fontSize: 40,
     fontFamily: 'Raleway-Regular',
     lineHeight: 48,
   },
   h2: {
-    fontSize: 40,
+    fontSize: 36,
     fontFamily: 'Raleway-Light',
     lineHeight: 40,
   },
   h3: {
-    fontSize: 32,
+    fontSize: 30,
     fontFamily: 'Raleway-Light',
     lineHeight: 38,
   },
@@ -41,16 +41,16 @@ export const typography = {
   },
 
   Bh1: {
-    fontSize: 48,
+    fontSize: 40,
     fontFamily: 'Raleway-Bold',
   },
   Bh2: {
-    fontSize: 40,
+    fontSize: 36,
     fontFamily: 'Raleway-Bold',
     lineHeight: 40,
   },
   Bh3: {
-    fontSize: 32,
+    fontSize: 30,
     fontFamily: 'Raleway-Bold',
     lineHeight: 38,
   },

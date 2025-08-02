@@ -13,10 +13,14 @@
     "resetassets": "npx react-native-asset && npx react-native start --reset-cache && npx react-native run-android"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-native/new-app-screen": "0.80.2",
     "@react-navigation/bottom-tabs": "^7.4.4",
     "@react-navigation/native": "^7.1.16",
     "@react-navigation/stack": "^7.4.4",
+    "@tanstack/react-query": "^5.84.1",
+    "axios": "^1.11.0",
+    "lucide-react-native": "^0.536.0",
     "react": "19.1.0",
     "react-hook-form": "^7.62.0",
     "react-native": "0.80.2",
@@ -26,7 +30,8 @@
     "react-native-safe-area-context": "^5.5.2",
     "react-native-screens": "^4.13.1",
     "react-native-tab-view": "^4.1.2",
-    "react-native-vector-icons": "^10.3.0"
+    "react-native-vector-icons": "^10.3.0",
+    "zod": "^4.0.14"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
