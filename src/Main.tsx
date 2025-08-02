@@ -12,6 +12,11 @@ import { colors } from './theme/colors';
 const Main = () => {
   const navigation = useAppNavigation();
 
+  const data = {
+    name: 'auth',
+    userId: 'gfergegergerg84646546',
+  };
+
   return (
     <FadeInView style={styles.container}>
       <Flex center flex>
@@ -39,6 +44,10 @@ const Main = () => {
       <Button
         title="Перейти на Home"
         onPress={() => navigation.navigate('Home')}
+      />
+      <Button
+        title="Details"
+        onPress={() => navigation.navigate('Details', data)}
       />
 
       <Loader />

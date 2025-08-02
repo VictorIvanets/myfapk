@@ -20,6 +20,8 @@ export type RootStackParamListT = {
         screen?: keyof RootHomeTabsParamListT;
       };
   Login: undefined;
+  Splash: undefined;
+  Details: { name: string; userId: string };
 };
 
 export type SceneProps = Parameters<ReturnType<typeof SceneMap>>[number];

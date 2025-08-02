@@ -11,6 +11,8 @@ import { colors } from 'src/theme/colors';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Login from 'src/screens/Login';
+import Splash from 'src/screens/AppLoader';
+import Details from 'src/screens/Details';
 
 const Stack = createStackNavigator<RootStackParamListT>();
 const Tabs = createBottomTabNavigator<RootHomeTabsParamListT>();
@@ -58,6 +60,7 @@ const HomeTabs = () => {
 const Navigator = (): React.JSX.Element => {
   return (
     <Stack.Navigator
+      initialRouteName="Splash"
       screenOptions={{
         headerShown: false,
         cardStyle: {
@@ -65,8 +68,10 @@ const Navigator = (): React.JSX.Element => {
         },
       }}
     >
+      <Stack.Screen name="Splash" component={Splash} />
       <Stack.Screen name="HomeTabs" component={HomeTabs} />
       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Details" component={Details} />
       {/* Інші Stack-екрани типу Login, Splash, тощо можна додати тут */}
     </Stack.Navigator>
   );
