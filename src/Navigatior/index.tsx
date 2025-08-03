@@ -1,4 +1,3 @@
-// Navigator.tsx
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from 'src/screens/Home/Home';
@@ -8,12 +7,13 @@ import type {
 } from 'src/Navigatior/route';
 import Map from 'src/screens/Map/Map';
 import { colors } from 'src/theme/colors';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Login from 'src/screens/Login/Login';
 import Splash from 'src/screens/AppLoader/AppLoader';
 import Details from 'src/screens/Details/Details';
 import Registration from 'src/screens/Registration/Registration';
+import Rules from 'src/screens/Rules/Rules';
+import Setting from 'src/screens/Setting/Setting';
 
 const Stack = createStackNavigator<RootStackParamListT>();
 const Tabs = createBottomTabNavigator<RootHomeTabsParamListT>();
@@ -34,7 +34,7 @@ const Navigator = (): React.JSX.Element => {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Details" component={Details} />
       <Stack.Screen name="Registration" component={Registration} />
-      {/* Інші Stack-екрани типу Login, Splash, тощо можна додати тут */}
+      <Stack.Screen name="Rules" component={Rules} />
     </Stack.Navigator>
   );
 };
@@ -62,7 +62,7 @@ const HomeTabs = () => {
         component={Home}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="home" size={size} color={color} />
+            <Ionicons name="fish" size={size} color={color} />
           ),
         }}
       />
@@ -71,7 +71,16 @@ const HomeTabs = () => {
         component={Map}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="fish" size={size} color={color} />
+            <Ionicons name="map-sharp" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Setting"
+        component={Setting}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="settings-sharp" size={size} color={color} />
           ),
         }}
       />

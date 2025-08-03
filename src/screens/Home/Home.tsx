@@ -1,15 +1,17 @@
-import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import { useAppNavigation } from 'src/hooks/useAppNavigation';
+import { StyleSheet } from 'react-native';
+import Flex from 'src/components/Flex';
+import Text from 'src/components/Text';
+import useGetUserInfoInStorage from 'src/hooks/useGetUserInfoInStorage';
 import { colors } from 'src/theme/colors';
 
 const Home = () => {
-  const navigation = useAppNavigation();
+  const user = useGetUserInfoInStorage();
+
   return (
-    <View style={styles.container}>
-      <Text>Home</Text>
-      <Button title="Main" onPress={() => navigation.navigate('Map')} />
-    </View>
+    <Flex style={styles.container}>
+      <Text>USER: {user?.login}</Text>
+      <Text>USER ID: {user?._id}</Text>
+    </Flex>
   );
 };
 

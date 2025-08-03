@@ -10,6 +10,7 @@ module.exports = {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       },
     ],
+    '@babel/plugin-transform-export-namespace-from',
     'react-native-reanimated/plugin',
   ],
 };

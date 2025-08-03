@@ -1,41 +1,41 @@
 import React from 'react';
-import { Alert, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import InputField from 'src/components/InputField/InputField';
 import Button from 'src/components/Button';
 import Flex from 'src/components/Flex';
 import Text from 'src/components/Text';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';
-
-type FormData = {
-  username: string;
-  password: string;
-};
+import useLogIn from 'src/hooks/useLogIn';
+import type { UserLogInDataFields } from './userLogInSchema';
+import { userLogInSchema } from './userLogInSchema';
+import type { LoginPayloadT } from 'src/types/auth.types';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function Login() {
   const navigation = useAppNavigation();
+  const { logIn } = useLogIn();
 
   const {
     control,
     handleSubmit,
-    formState: {},
-  } = useForm<FormData>({
+    reset,
+    formState: { errors },
+  } = useForm<UserLogInDataFields>({
+    resolver: zodResolver(userLogInSchema),
     defaultValues: {
-      username: '',
+      login: '',
       password: '',
     },
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log('Form Data:', data);
-    Alert.alert(
-      'Успіх',
-      `Username: ${data.username}\nPassword: ${data.password}`,
-    );
+  const onSubmit = (data: LoginPayloadT) => {
+    logIn(data);
+    reset();
   };
 
   return (
-    <Flex flex center gap="s4">
+    <Flex flex center gap="s1">
       <Image
         source={require('../../../assets/images/logoMf-01.png')}
         style={styles.image}
@@ -45,7 +45,7 @@ export default function Login() {
         <Flex style={styles.inputs}>
           <Controller
             control={control}
-            name="username"
+            name="login"
             rules={{ required: 'Імʼя користувача обовʼязкове' }}
             render={({
               field: { onChange, onBlur, value },
@@ -56,7 +56,7 @@ export default function Login() {
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                error={error?.message}
+                error={errors.login ? errors.login?.message : error?.message}
                 ibackground
               />
             )}
@@ -75,7 +75,9 @@ export default function Login() {
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
-                error={error?.message}
+                error={
+                  errors.password ? errors.password?.message : error?.message
+                }
                 ibackground
                 secureTextEntry
               />
@@ -84,9 +86,16 @@ export default function Login() {
         </Flex>
         <Button view="max" title="Увійти" onPress={handleSubmit(onSubmit)} />
       </Flex>
-      <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
-        <Text size="subtitle">Реєстрація</Text>
-      </TouchableOpacity>
+      <Flex row gap="s10">
+        <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
+          <Text size="subtitle">Реєстрація</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Rules')}>
+          <Text color="ACCENT" size="subtitle">
+            Правила
+          </Text>
+        </TouchableOpacity>
+      </Flex>
     </Flex>
   );
 }
@@ -95,7 +104,6 @@ const styles = StyleSheet.create({
   container: {
     width: '90%',
     padding: 16,
-    // gap: 12,
   },
   inputs: {
     width: '100%',

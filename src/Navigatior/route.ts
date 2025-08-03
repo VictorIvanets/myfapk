@@ -11,6 +11,7 @@ export type NavigationStateRoute = NavigationState['routes'][number];
 export type RootHomeTabsParamListT = {
   Home: undefined;
   Map: undefined;
+  Setting: undefined;
 };
 
 export type RootStackParamListT = {
@@ -23,6 +24,7 @@ export type RootStackParamListT = {
   Splash: undefined;
   Details: { name: string; userId: string };
   Registration: undefined;
+  Rules: undefined;
 };
 
 export type SceneProps = Parameters<ReturnType<typeof SceneMap>>[number];
