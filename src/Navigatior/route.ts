@@ -5,6 +5,8 @@ import type {
 } from '@react-navigation/native';
 import type { StackScreenProps } from '@react-navigation/stack';
 import type { SceneMap } from 'react-native-tab-view';
+import type { OneFishingT } from 'src/types/fishing';
+import type { LeafletViewCoordsT } from 'src/types/map.types';
 
 export type NavigationStateRoute = NavigationState['routes'][number];
 
@@ -22,9 +24,10 @@ export type RootStackParamListT = {
       };
   Login: undefined;
   Splash: undefined;
-  Details: { name: string; userId: string };
+  Details: { id: string };
   Registration: undefined;
   Rules: undefined;
+  CreateFishing: { coords?: LeafletViewCoordsT; updata?: OneFishingT };
 };
 
 export type SceneProps = Parameters<ReturnType<typeof SceneMap>>[number];

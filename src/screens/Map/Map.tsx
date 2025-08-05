@@ -1,62 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, PermissionsAndroid, Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import FadeInView from 'src/components/FadeInView';
 import { colors } from '../../theme/colors';
-import { AnimationType, LeafletView } from 'react-native-leaflet-view';
-import Geolocation from 'react-native-geolocation-service';
+import { LeafletView } from 'react-native-leaflet-view';
 import Flex from 'src/components/Flex';
+import type { LeafletViewCoordsT } from 'src/types/map.types';
+import useGetAllforMap from 'src/hooks/useGetAllforMap';
+import Button from 'src/components/Button';
+import {
+  markerAllFishing,
+  markerSetFishing,
+  ownPositionMarker,
+} from './Markers';
+import { requestLocationPermission } from './requestLocationPermission';
+import { useAppNavigation } from 'src/hooks/useAppNavigation';
 
 const Map = () => {
-  const [location, setLocation] = useState<{
-    latitude: number;
-    longitude: number;
-  } | null>(null);
-  const [markers, setMarkers] = useState<{ lat: number; lng: number }[]>([]);
+  const navigation = useAppNavigation();
+  const [location, setLocation] = useState<LeafletViewCoordsT | null>(null);
+  const [markers, setMarkers] = useState<LeafletViewCoordsT[]>([]);
+  const [viewAll, setViewAll] = useState<boolean>(false);
+  const [zoom, setZoom] = useState<number>(13);
+  const { markerData } = useGetAllforMap();
 
   useEffect(() => {
-    const requestLocationPermission = async () => {
-      try {
-        if (Platform.OS === 'android') {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          );
-          if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-            Alert.alert('Permission denied');
-            return;
-          }
-        }
-        Geolocation.getCurrentPosition(
-          pos => {
-            const { latitude, longitude } = pos.coords;
-            console.log(pos.coords);
-            setLocation({ latitude, longitude });
-          },
-          error => {
-            console.error(error);
-            Alert.alert('Error', error.message);
-          },
-          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
-        );
-      } catch (err) {
-        console.warn(err);
-      }
-    };
-
-    requestLocationPermission();
+    requestLocationPermission(setLocation);
   }, []);
 
   const handleMapClick = (event: any) => {
+    // console.log(event.event);
     if (event.event === 'onMapClicked') {
       const { lat, lng } = event.payload.touchLatLng;
-      console.log('setMarkers:', [{ lat, lng }]);
       setMarkers([{ lat, lng }]);
+      !viewAll && setZoom(15);
     }
 
     if (event.event === 'onMapMarkerClicked') {
-      console.log(markers);
-      console.log('click');
-      // const { lat, lng } = event.payload.touchLatLng;
-      // Alert.alert('Натиснуто на мітку', `lat: ${lat}\nlng: ${lng}`);
+      if (viewAll && markerData) {
+        const { mapMarkerID } = event.payload;
+        navigation.navigate('Details', { id: mapMarkerID });
+      } else {
+        navigation.navigate('CreateFishing', { coords: markers[0] });
+        console.log('setFishinf', markers[0]);
+      }
     }
   };
 
@@ -64,34 +50,38 @@ const Map = () => {
     <FadeInView style={styles.container}>
       {location && (
         <LeafletView
-          zoom={13}
+          zoom={zoom}
           zoomControl={false}
-          mapCenterPosition={{
-            lat: location.latitude,
-            lng: location.longitude,
-          }}
+          mapCenterPosition={markers.length ? markers[0] : location}
           onMessageReceived={handleMapClick}
-          mapMarkers={markers.map((marker, index) => ({
-            id: `marker-${index}`,
-            position: marker,
-            icon: '🔵',
-            size: [30, 30],
-          }))}
-          ownPositionMarker={{
-            animation: {
-              type: AnimationType.FADE,
-              duration: 20,
-            },
-            icon: '📍',
-            position: { lat: location.latitude, lng: location.longitude },
-            size: [25, 25],
-            title: '',
-          }}
+          mapMarkers={
+            viewAll && markerData
+              ? markerAllFishing(markerData)
+              : markerSetFishing(markers)
+          }
+          ownPositionMarker={ownPositionMarker(location)}
         />
       )}
-      <Flex style={styles.box}>
-        <></>
+      <Flex center style={styles.box}>
+        <Button
+          onPress={() => {
+            viewAll ? setZoom(13) : setZoom(11);
+            setViewAll(!viewAll);
+            !viewAll && setLocation(location);
+            !viewAll && setMarkers([]);
+          }}
+          view="small"
+          title="всі мітки"
+        />
       </Flex>
+      {viewAll && (
+        <Flex center style={styles.filter}>
+          <Button outline view="small" title="Короп" />
+          <Button outline view="small" title="Карась" />
+          <Button outline view="small" title="Амур" />
+          <Button outline view="small" title="Щука" />
+        </Flex>
+      )}
     </FadeInView>
   );
 };
@@ -108,9 +98,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     right: 10,
-    width: 100,
-    height: 300,
-    backgroundColor: colors.MAIN50,
+  },
+  filter: {
+    position: 'absolute',
+    bottom: 60,
+    right: 10,
+    width: 90,
+    // backgroundColor: colors.MAIN50,
+    borderRadius: 10,
   },
 });
 

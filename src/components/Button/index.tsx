@@ -12,6 +12,7 @@ export type ButtonProps = Omit<PressableProps, 'children' | 'style'> & {
   loading?: boolean;
   style?: ViewProps['style'];
   title: string;
+  outline?: boolean;
 };
 
 const Button: FC<ButtonProps> = ({
@@ -19,6 +20,7 @@ const Button: FC<ButtonProps> = ({
   disabled,
   title,
   style: buttonStyle,
+  outline,
   ...props
 }) => {
   const scale = useRef(new Animated.Value(1)).current;
@@ -56,8 +58,18 @@ const Button: FC<ButtonProps> = ({
             view === 'max' && s.max,
             buttonStyle,
             disabled && s.disabled,
+            // eslint-disable-next-line react-native/no-inline-styles
             {
-              backgroundColor: pressed ? colors.ACCENT50 : colors.ACCENT,
+              borderColor: outline ? colors.ACCENT50 : 'none',
+              borderWidth: outline ? 1 : 0,
+              backgroundColor:
+                !outline && pressed
+                  ? colors.ACCENT50
+                  : outline && pressed
+                  ? colors.ACCENT50
+                  : outline
+                  ? colors.SECOND50
+                  : colors.ACCENT,
               transform: [{ scale }],
             },
           ]}

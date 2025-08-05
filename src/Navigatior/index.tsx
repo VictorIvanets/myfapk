@@ -14,6 +14,7 @@ import Details from 'src/screens/Details/Details';
 import Registration from 'src/screens/Registration/Registration';
 import Rules from 'src/screens/Rules/Rules';
 import Setting from 'src/screens/Setting/Setting';
+import CreateFishing from 'src/screens/CreateFishing/CreateFishing';
 
 const Stack = createStackNavigator<RootStackParamListT>();
 const Tabs = createBottomTabNavigator<RootHomeTabsParamListT>();
@@ -35,6 +36,7 @@ const Navigator = (): React.JSX.Element => {
       <Stack.Screen name="Details" component={Details} />
       <Stack.Screen name="Registration" component={Registration} />
       <Stack.Screen name="Rules" component={Rules} />
+      <Stack.Screen name="CreateFishing" component={CreateFishing} />
     </Stack.Navigator>
   );
 };

@@ -1,31 +1,42 @@
 import type { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Button from 'src/components/Button';
+import FadeInView from 'src/components/FadeInView';
+import Flex from 'src/components/Flex';
 import Text from 'src/components/Text';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';
+import useGetOneFishing from 'src/hooks/useGetOneFishing';
 import type { RootStackParamListT } from 'src/Navigatior/route';
+import { colors } from 'src/theme/colors';
 
 type Props = StackScreenProps<RootStackParamListT, 'Details'>;
 
 const Details = ({ route }: Props) => {
   const data = route.params;
   const navigation = useAppNavigation();
+  const { data: oneFishing } = useGetOneFishing(data.id);
 
   return (
-    <View style={styles.container}>
+    <FadeInView style={styles.container}>
       <Text>Details</Text>
-      <Text>UserID {data.userId}</Text>
+      <Flex>
+        <Text>{oneFishing?.title}</Text>
+        <Text>{oneFishing?.description}</Text>
+        <Text>{oneFishing?.img.length}</Text>
+      </Flex>
       <Button title="Назад" onPress={() => navigation.goBack()} />
-    </View>
+    </FadeInView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    padding: 10,
+    backgroundColor: colors.MAIN,
   },
 });
 
