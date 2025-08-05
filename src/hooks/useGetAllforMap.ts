@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useMemo } from 'react';
 import { fishingServices } from 'src/services/fishing.services';
 import { QUERY_KEY } from 'src/types/constants';
 import type { ResponseForMapT } from 'src/types/fishing';
@@ -9,18 +10,20 @@ const useGetAllforMap = () => {
     queryKey: [QUERY_KEY.ALL_FISH_FOR_MAP],
     queryFn: fishingServices.getAllforMap,
   });
+  console.log('QUERY_KEY.ALL_FISH_FOR_MAP');
 
-  const markerData: LeafletViewCoordsT[] | undefined = data?.map(
-    (i): LeafletViewCoordsT => {
+  const markerData = useMemo((): LeafletViewCoordsT[] | undefined => {
+    return data?.map((i): LeafletViewCoordsT => {
       return {
         lat: i.coords[0],
         lng: i.coords[1],
         id: i._id,
         description: i.description,
         title: i.title,
+        score: i.score,
       };
-    },
-  );
+    });
+  }, [data]);
 
   return {
     data,

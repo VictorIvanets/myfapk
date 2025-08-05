@@ -15,4 +15,5 @@ export type LeafletViewCoordsT = {
   id?: string;
   description?: string;
   title?: string;
+  score?: number;
 };
