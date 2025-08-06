@@ -35,8 +35,8 @@ export const typography = {
     lineHeight: 21,
   },
   caption: {
-    fontSize: 10,
-    fontFamily: 'Raleway-Regular',
+    fontSize: 16,
+    fontFamily: 'Roboto-Regular',
     lineHeight: 15,
   },
 
@@ -75,8 +75,8 @@ export const typography = {
     lineHeight: 21,
   },
   Bcaption: {
-    fontSize: 10,
-    fontFamily: 'Raleway-Bold',
+    fontSize: 16,
+    fontFamily: 'Roboto-Bold',
     lineHeight: 15,
   },
 } as const;

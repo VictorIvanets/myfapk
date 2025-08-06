@@ -63,7 +63,7 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
         <TextInput
           ref={ref}
           placeholder={placeholderInput}
-          placeholderTextColor={colors.ACCENT50}
+          placeholderTextColor={colors.TEXTDARK}
           secureTextEntry={secureTextEntry ? isHidden : false}
           multiline={multiline}
           style={[
@@ -77,15 +77,19 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
         {secureTextEntry && (
           <TouchableOpacity onPress={toggleVisibility} style={styles.eyeButton}>
             {isHidden ? (
-              <Ionicons name="eye-off-outline" size={20} color="#999" />
+              <Ionicons
+                name="eye-off-outline"
+                size={20}
+                color={colors.TEXTDARK}
+              />
             ) : (
-              <Ionicons name="eye-outline" size={20} color="#999" />
+              <Ionicons name="eye-outline" size={20} color={colors.TEXTDARK} />
             )}
           </TouchableOpacity>
         )}
         {search && (
           <Flex style={styles.search}>
-            <Ionicons name="search" size={20} color="#999" />
+            <Ionicons name="search" size={20} color={colors.TEXTDARK} />
           </Flex>
         )}
 

@@ -37,7 +37,7 @@ export const ownPositionMarker = (
     },
     icon: '🔴',
     position: location,
-    size: [10, 10],
+    size: [20, 20],
     title: '',
   };
 };

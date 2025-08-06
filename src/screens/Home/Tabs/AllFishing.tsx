@@ -7,7 +7,7 @@ import InputField from 'src/components/InputField/InputField';
 import Text from 'src/components/Text';
 import useGetAll from 'src/hooks/useGetAll';
 import { colors } from 'src/theme/colors';
-import FishingCard from '../FishingCard';
+import FishingCard from '../../../components/FishingCard/FishingCard';
 
 const AllFishing = () => {
   const {
@@ -30,14 +30,12 @@ const AllFishing = () => {
         placeholderInput="Пошку по назві"
         onChangeText={setValueTitle}
         value={valueTitle}
-        ibackground
         search
       />
       <InputField
         placeholder="Пошку по опису"
         onChangeText={setValueDescription}
         value={valueDescription}
-        ibackground
         search
       />
       {error && <Text>{error.message}</Text>}

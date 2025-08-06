@@ -34,6 +34,7 @@ const Map = () => {
   }, []);
 
   const handleMapClick = (event: any) => {
+    console.log(event);
     if (event.event === 'onMapClicked') {
       const { lat, lng } = event.payload.touchLatLng;
       setMarkers([{ lat, lng }]);
@@ -43,9 +44,14 @@ const Map = () => {
     if (event.event === 'onMapMarkerClicked') {
       if (viewAll && filterAll) {
         const { mapMarkerID } = event.payload;
-        navigation.navigate('Details', { id: mapMarkerID });
+        if (mapMarkerID === 'OWN_POSTION_MARKER_ID') return;
+        else mapMarkerID && navigation.navigate('Details', { id: mapMarkerID });
       } else {
-        navigation.navigate('CreateFishing', { coords: markers[0] });
+        const { mapMarkerID } = event.payload;
+        if (mapMarkerID === 'OWN_POSTION_MARKER_ID')
+          location &&
+            navigation.navigate('CreateFishing', { coords: location });
+        else navigation.navigate('CreateFishing', { coords: markers[0] });
       }
     }
   };
