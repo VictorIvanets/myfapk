@@ -71,10 +71,14 @@ class FishingServices {
     }
   }
 
-  public async getAll(cursor?: string, limit = 5): Promise<FishingResponseT> {
+  public async getAll(
+    cursor?: string,
+    title?: string,
+    limit = 4,
+  ): Promise<FishingResponseT> {
     try {
       const result = await api.get(API_ENDPOINTS.FISHING.GET_ALL, {
-        params: { cursor, limit },
+        params: { cursor, limit, title },
       });
       return result.data;
     } catch (e) {
@@ -105,11 +109,12 @@ class FishingServices {
 
   public async getAllByUser(
     cursor?: string,
-    limit = 5,
+    title?: string,
+    limit = 4,
   ): Promise<FishingResponseT> {
     try {
       const result = await api.get(API_ENDPOINTS.FISHING.GET_ALL_BY_USER, {
-        params: { cursor, limit },
+        params: { cursor, limit, title },
       });
       return result.data;
     } catch (e) {

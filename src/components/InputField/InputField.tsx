@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { colors } from 'src/theme/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Flex from '../Flex';
 
 type BaseProps = {
   label?: string;
@@ -18,6 +19,7 @@ type BaseProps = {
   ibackground?: boolean;
   heightArea?: number;
   multiline?: boolean;
+  search?: boolean;
 };
 
 type InputFieldProps = TextInputProps & BaseProps;
@@ -33,6 +35,7 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
       multiline = false,
       secureTextEntry,
       style,
+      search,
       ...rest
     },
     ref,
@@ -77,6 +80,11 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
               <Ionicons name="eye-outline" size={20} color="#999" />
             )}
           </TouchableOpacity>
+        )}
+        {search && (
+          <Flex style={styles.search}>
+            <Ionicons name="search" size={20} color="#999" />
+          </Flex>
         )}
 
         {error && <Text style={styles.errorMessage}>{error}</Text>}
@@ -133,5 +141,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 12,
     top: 37,
+  },
+  search: {
+    position: 'absolute',
+    right: 12,
+    top: 15,
   },
 });

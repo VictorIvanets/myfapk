@@ -18,11 +18,14 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import useUpdateFising from 'src/hooks/useUpdateFising';
 import Button from 'src/components/Button';
+import { useAppNavigation } from 'src/hooks/useAppNavigation';
 
 type Props = StackScreenProps<RootStackParamListT, 'CreateFishing'>;
 
 const CreateFishing = ({ route }: Props) => {
   const { coords, updata } = route.params;
+  const { navigate } = useAppNavigation();
+
   const [weather, setWeather] = useState<WeatherT | undefined>();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const showDatePicker = () => setDatePickerVisibility(true);
@@ -73,9 +76,8 @@ const CreateFishing = ({ route }: Props) => {
         img: [],
         weather: weather,
       };
-      console.log(paramsFishing);
-      //   create(paramsFishing);
-      //   navigate(`/mypage`);
+      create(paramsFishing);
+      navigate('HomeTabs');
     }
     reset();
   };
@@ -98,9 +100,9 @@ const CreateFishing = ({ route }: Props) => {
       };
       const _id = updata?._id || '';
       const payload = { ...updata, ...updateParamsFishing };
-      console.log({ _id, payload });
-      //   updateFishing({ _id, payload });
-      // navigate(`/details/${updata._id}`);
+      console.log('update', { _id, payload });
+      updateFishing({ _id, payload });
+      navigate('Details', { id: _id });
     }
     reset();
   };

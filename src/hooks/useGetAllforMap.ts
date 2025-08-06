@@ -10,7 +10,6 @@ const useGetAllforMap = () => {
     queryKey: [QUERY_KEY.ALL_FISH_FOR_MAP],
     queryFn: fishingServices.getAllforMap,
   });
-  console.log('QUERY_KEY.ALL_FISH_FOR_MAP');
 
   const markerData = useMemo((): LeafletViewCoordsT[] | undefined => {
     return data?.map((i): LeafletViewCoordsT => {

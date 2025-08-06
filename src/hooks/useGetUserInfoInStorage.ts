@@ -12,7 +12,7 @@ const useGetUserInfoInStorage = (): LoginResponseT | undefined => {
       setUser(token);
     };
     loadStorage();
-  });
+  }, []);
 
   return user;
 };
