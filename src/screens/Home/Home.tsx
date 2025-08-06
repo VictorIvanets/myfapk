@@ -1,60 +1,56 @@
-import { ActivityIndicator, RefreshControl, StyleSheet } from 'react-native';
+import { ActivityIndicator, Dimensions, StyleSheet } from 'react-native';
 import Flex from 'src/components/Flex';
-import Text from 'src/components/Text';
 import { colors } from 'src/theme/colors';
-import { FlashList } from '@shopify/flash-list';
-import Divider from 'src/components/Divider';
-import useGetAll from 'src/hooks/useGetAll';
-import InputField from 'src/components/InputField/InputField';
+import AllFishing from './Tabs/AllFishing';
+import UserFishing from './Tabs/UserFishing';
+import { FishingTabs } from './Tabs/types';
+import { useMemo } from 'react';
+import { SceneMap } from 'react-native-tab-view';
+import TabView from 'src/components/TabView';
+const screenWidth = Dimensions.get('window').width;
+const TAB_WIDTH = screenWidth / 2 - 16;
 
 const Home = () => {
-  // const user = useGetUserInfoInStorage();
+  const userFishingTab = useMemo(() => <UserFishing />, []);
 
-  const {
-    isLoading,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    allItems,
-    isRefetching,
-    refetchData,
-    value,
-    setValue,
-  } = useGetAll();
+  const allFishingTab = useMemo(() => <AllFishing />, []);
 
-  // console.log('allItems.length', allItems.length);
+  const renderScene = useMemo(
+    () =>
+      SceneMap({
+        [FishingTabs.USER]: () => userFishingTab,
+        [FishingTabs.ALL]: () => allFishingTab,
+      }),
+    [userFishingTab, allFishingTab],
+  );
 
   return (
     <Flex flex gap="s3" style={styles.container}>
-      <Text>Всі рибалки</Text>
-      <InputField onChangeText={setValue} value={value} ibackground search />
-      {error && <Text>{error.message}</Text>}
-      <FlashList
-        refreshControl={
-          <RefreshControl refreshing={isRefetching} onRefresh={refetchData} />
-        }
-        ItemSeparatorComponent={Divider}
-        onEndReached={() => {
-          if (!isLoading && hasNextPage && !isFetchingNextPage) {
-            fetchNextPage();
-          }
+      <TabView
+        tabStyle={styles.tabStyle}
+        tabBarStyle={styles.tabBar}
+        indicatorStyle={{
+          width: TAB_WIDTH,
+          backgroundColor: colors.ACCENT50,
         }}
-        estimatedItemSize={150}
-        onEndReachedThreshold={0.4}
-        ListFooterComponent={
-          isFetchingNextPage ? (
-            <ActivityIndicator size={80} color={colors.ACCENT} />
-          ) : null
-        }
-        data={allItems}
-        renderItem={({ item }) => {
-          return (
-            <Flex center flex style={styles.item}>
-              <Text>{item.title}</Text>
-            </Flex>
-          );
-        }}
+        lazy
+        swipeEnabled
+        scrollEnabled
+        renderLazyPlaceholder={() => (
+          <ActivityIndicator size={50} color={colors.ACCENT} />
+        )}
+        defaultTabIndex={0}
+        routes={[
+          {
+            key: FishingTabs.USER,
+            title: 'ВАШІ ЗАПИСИ',
+          },
+          {
+            key: FishingTabs.ALL,
+            title: 'ВСІ ЗАПИСИ',
+          },
+        ]}
+        renderScene={renderScene}
       />
     </Flex>
   );
@@ -65,10 +61,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.MAIN,
     padding: 12,
   },
-  item: {
-    width: '100%',
-    height: 150,
-    backgroundColor: colors.BLUE50,
+  tabBar: {
+    alignSelf: 'stretch',
+    marginBottom: 10,
+  },
+  tabStyle: {
+    width: TAB_WIDTH,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

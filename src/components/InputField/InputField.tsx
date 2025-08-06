@@ -20,6 +20,7 @@ type BaseProps = {
   heightArea?: number;
   multiline?: boolean;
   search?: boolean;
+  placeholderInput?: string;
 };
 
 type InputFieldProps = TextInputProps & BaseProps;
@@ -29,6 +30,7 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
     {
       label,
       error,
+      placeholderInput = ' ',
       appearance = 'small',
       ibackground = false,
       heightArea = 150,
@@ -60,8 +62,8 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
 
         <TextInput
           ref={ref}
-          placeholder=" "
-          placeholderTextColor={colors.SECOND50}
+          placeholder={placeholderInput}
+          placeholderTextColor={colors.ACCENT50}
           secureTextEntry={secureTextEntry ? isHidden : false}
           multiline={multiline}
           style={[

@@ -6,8 +6,10 @@ import type { OneFishingT } from 'src/types/fishing';
 import { useDebounce } from './useDebounce';
 
 const useGetAll = () => {
-  const [value, setValue] = useState<string>();
-  const debounceTitle = useDebounce(value, 500);
+  const [valueTitle, setValueTitle] = useState<string>();
+  const [valueDescription, setValueDescription] = useState<string>();
+  const debounceTitle = useDebounce(valueTitle, 500);
+  const debounceDescription = useDebounce(valueDescription, 500);
 
   const {
     data,
@@ -20,9 +22,13 @@ const useGetAll = () => {
     isRefetching,
     refetch,
   } = useInfiniteQuery({
-    queryKey: [QUERY_KEY.ALL_FISH, debounceTitle],
+    queryKey: [QUERY_KEY.ALL_FISH, debounceTitle, debounceDescription],
     queryFn: ({ pageParam }) =>
-      fishingServices.getAll(pageParam as string | undefined, debounceTitle),
+      fishingServices.getAll(
+        pageParam as string | undefined,
+        debounceTitle,
+        debounceDescription,
+      ),
     getNextPageParam: (lastPage: {
       data: OneFishingT[];
       nextCursor: string | null;
@@ -42,8 +48,10 @@ const useGetAll = () => {
     allItems,
     isRefetching,
     refetchData: refetch,
-    value,
-    setValue,
+    valueTitle,
+    setValueTitle,
+    valueDescription,
+    setValueDescription,
   };
 };
 
