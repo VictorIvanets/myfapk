@@ -11,7 +11,7 @@ import { colors } from 'src/theme/colors';
 import TabView from 'src/components/TabView';
 import { useDetails } from './useDetails';
 const screenWidth = Dimensions.get('window').width;
-const TAB_WIDTH = screenWidth / 4;
+const TAB_WIDTH = screenWidth / 3;
 
 type Props = StackScreenProps<RootStackParamListT, 'Details'>;
 

@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import useGetOneFishing from 'src/hooks/useGetOneFishing';
-import SettingTab from './Tabs/SettingTab';
 import PhotoTab from './Tabs/PhotoTab';
 import InfoTab from './Tabs/InfoTab';
 import CommentsTab from './Tabs/CoomentsTab';
@@ -12,10 +11,7 @@ export const useDetails = (id: string) => {
   const { data: oneFishing } = useGetOneFishing(id);
 
   const photoTab = useMemo(() => <PhotoTab data={oneFishing} />, [oneFishing]);
-  const settingTab = useMemo(
-    () => <SettingTab data={oneFishing} />,
-    [oneFishing],
-  );
+
   const infoTab = useMemo(() => <InfoTab data={oneFishing} />, [oneFishing]);
   const commentsTab = useMemo(
     () => <CommentsTab data={oneFishing} />,
@@ -28,9 +24,8 @@ export const useDetails = (id: string) => {
         [DateilsTabs.INFO]: () => infoTab,
         [DateilsTabs.PHOTO]: () => photoTab,
         [DateilsTabs.COMMENTS]: () => commentsTab,
-        [DateilsTabs.SETTING]: () => settingTab,
       }),
-    [infoTab, photoTab, settingTab, commentsTab],
+    [infoTab, photoTab, commentsTab],
   );
 
   const routes: Route[] = [
@@ -44,11 +39,7 @@ export const useDetails = (id: string) => {
     },
     {
       key: DateilsTabs.COMMENTS,
-      title: 'КОММ',
-    },
-    {
-      key: DateilsTabs.SETTING,
-      title: 'SET',
+      title: 'КОММЕНТАРІ',
     },
   ];
 

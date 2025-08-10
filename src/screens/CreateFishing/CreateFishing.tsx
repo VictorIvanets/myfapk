@@ -19,6 +19,7 @@ import moment from 'moment';
 import useUpdateFising from 'src/hooks/useUpdateFising';
 import Button from 'src/components/Button';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type Props = StackScreenProps<RootStackParamListT, 'CreateFishing'>;
 
@@ -77,7 +78,7 @@ const CreateFishing = ({ route }: Props) => {
         weather: weather,
       };
       create(paramsFishing);
-      navigate('HomeTabs');
+      // navigate('HomeTabs');
     }
     reset();
   };
@@ -109,123 +110,135 @@ const CreateFishing = ({ route }: Props) => {
 
   return (
     <FadeInView style={styles.container}>
-      {updata ? (
-        <Flex center>
-          <Text color="ACCENT" size="h4" center>
-            Оновлення даних
-          </Text>
-          <Text center>
-            Ви можете оновити тільки назву, опис, оцінку та дату
-          </Text>
-          <Text center>Координати та погодні умови не змінюються</Text>Text
-        </Flex>
-      ) : (
-        <Flex center>
-          <Text color="ACCENT" size="h4" center>
-            Створіть запис про рибалку
-          </Text>
-          <Text size="subtitle" center>
-            Додайте назву, опис, оцінку та дату
-          </Text>
-          <Text size="subtitle" center>
-            В описі, бажано, перерахувати, {'\n'} що ловилося, та на що
-          </Text>
-          <Text size="subtitle" center>
-            Опис бажано робити українською, щоб був коректний пошук ("короп",
-            "товстолоб")
-          </Text>
-        </Flex>
-      )}
-      <Flex style={styles.inputs}>
-        <Controller
-          control={control}
-          name="title"
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <InputField
-              label="Назва"
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-              error={errors.title ? errors.title?.message : error?.message}
-              ibackground
-            />
-          )}
-        />
+      <ScrollView>
+        <Flex flex gap="s5">
+          <Flex flex>
+            {updata ? (
+              <Flex center>
+                <Text color="ACCENT" size="h4" center>
+                  Оновлення даних
+                </Text>
+                <Text center>
+                  Ви можете оновити тільки назву, опис, оцінку та дату
+                </Text>
+                <Text center>Координати та погодні умови не змінюються</Text>
+              </Flex>
+            ) : (
+              <Flex center>
+                <Text color="ACCENT" size="h4" center>
+                  Створіть запис про рибалку
+                </Text>
+                <Text size="subtitle" center>
+                  Додайте назву, опис, оцінку та дату
+                </Text>
+                <Text size="subtitle" center>
+                  В описі, бажано, перерахувати, {'\n'} що ловилося, та на що
+                </Text>
+                <Text size="subtitle" center>
+                  Опис бажано робити українською, щоб був коректний пошук
+                  ("короп", "товстолоб")
+                </Text>
+              </Flex>
+            )}
+          </Flex>
 
-        <Controller
-          control={control}
-          name="description"
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <InputField
-              label="Опис"
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-              error={
-                errors.description
-                  ? errors.description?.message
-                  : error?.message
-              }
-              ibackground
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name="date"
-          render={({ field: { onChange, value } }) => (
-            <>
-              <TouchableOpacity onPress={showDatePicker}>
+          <Flex gap="s1" style={styles.inputs}>
+            <Controller
+              control={control}
+              name="title"
+              render={({
+                field: { onChange, onBlur, value },
+                fieldState: { error },
+              }) => (
                 <InputField
-                  label="Дата"
-                  value={value ? moment(value).format('YYYY-MM-DDTHH:mm') : ''}
-                  editable={false}
-                  error={errors.date?.message}
+                  label="Назва"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  error={errors.title ? errors.title?.message : error?.message}
+                  ibackground
                 />
-              </TouchableOpacity>
-
-              <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                mode="date"
-                date={value ? new Date(value) : new Date()}
-                onConfirm={date => {
-                  onChange(moment(date).format('YYYY-MM-DDTHH:mm'));
-                  hideDatePicker();
-                }}
-                onCancel={hideDatePicker}
-              />
-            </>
-          )}
-        />
-
-        <Controller
-          control={control}
-          name="score"
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <InputField
-              keyboardType="numeric"
-              label="Оцінка"
-              onChangeText={text => onChange(Number(text))}
-              onBlur={onBlur}
-              value={value.toString()}
-              error={errors.score ? errors.score?.message : error?.message}
-              ibackground
+              )}
             />
-          )}
-        />
+
+            <Controller
+              control={control}
+              name="description"
+              render={({
+                field: { onChange, onBlur, value },
+                fieldState: { error },
+              }) => (
+                <InputField
+                  label="Опис"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  error={
+                    errors.description
+                      ? errors.description?.message
+                      : error?.message
+                  }
+                  ibackground
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="date"
+              render={({ field: { onChange, value } }) => (
+                <>
+                  <TouchableOpacity onPress={showDatePicker}>
+                    <InputField
+                      label="Дата"
+                      value={
+                        value ? moment(value).format('YYYY-MM-DDTHH:mm') : ''
+                      }
+                      editable={false}
+                      error={errors.date?.message}
+                    />
+                  </TouchableOpacity>
+
+                  <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode="date"
+                    date={value ? new Date(value) : new Date()}
+                    onConfirm={date => {
+                      onChange(moment(date).format('YYYY-MM-DDTHH:mm'));
+                      hideDatePicker();
+                    }}
+                    onCancel={hideDatePicker}
+                  />
+                </>
+              )}
+            />
+
+            <Controller
+              control={control}
+              name="score"
+              render={({
+                field: { onChange, onBlur, value },
+                fieldState: { error },
+              }) => (
+                <InputField
+                  keyboardType="numeric"
+                  label="Оцінка"
+                  onChangeText={text => onChange(Number(text))}
+                  onBlur={onBlur}
+                  value={value.toString()}
+                  error={errors.score ? errors.score?.message : error?.message}
+                  ibackground
+                />
+              )}
+            />
+          </Flex>
+        </Flex>
+      </ScrollView>
+      <Flex center>
         <Button
           view="max"
           title={updata ? 'Оновити' : 'Створити'}
           onPress={handleSubmit(updata ? update : submit)}
+          style={styles.btn}
         />
       </Flex>
     </FadeInView>
@@ -235,13 +248,14 @@ const CreateFishing = ({ route }: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     padding: 25,
-    gap: 15,
+    gap: 25,
   },
   inputs: {
     width: '100%',
+  },
+  btn: {
+    marginTop: 25,
   },
 });
 

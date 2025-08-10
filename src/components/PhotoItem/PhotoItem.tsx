@@ -9,6 +9,7 @@ import type { ResponseGetPhoto } from 'src/types/photo.types';
 import type { OneFishingT } from 'src/types/fishing';
 import useDeletePhoto from 'src/hooks/useDeletePhoto';
 import Text from '../Text';
+import useGetUserInfoInStorage from 'src/hooks/useGetUserInfoInStorage';
 
 type Props = {
   data: OneFishingT;
@@ -18,10 +19,12 @@ type Props = {
 const PhotoItem = ({ item, data }: Props) => {
   const [deleteItem, setDeleteItem] = useState(false);
   const { deletePhoto } = useDeletePhoto(data._id);
+  const user = useGetUserInfoInStorage();
+
   return (
     <ScaleInPressable
       disabled={deleteItem}
-      onLongPress={() => setDeleteItem(true)}
+      onLongPress={() => user?._id === data?.userId && setDeleteItem(true)}
       style={styles.imagebox}
     >
       <Image

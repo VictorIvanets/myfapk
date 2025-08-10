@@ -31,10 +31,6 @@ const PhotoTab = ({ data }: TabProps) => {
     }, 500);
   }, [photoData]);
 
-  const addPhoto = () => {
-    console.log(data?._id);
-  };
-
   const takeImageFromGallery = async () => {
     const imageFile = await handleSelectImage(launchImageLibrary);
     const formData = new FormData();
@@ -61,7 +57,7 @@ const PhotoTab = ({ data }: TabProps) => {
       ) : (
         <Flex center flex>
           {user?._id === data?.userId ? (
-            <ScaleInPressable onPress={addPhoto}>
+            <ScaleInPressable onPress={takeImageFromGallery}>
               <Flex center>
                 <Text center color="TEXTDARK">
                   Ще немає фото.
@@ -79,13 +75,18 @@ const PhotoTab = ({ data }: TabProps) => {
           )}
         </Flex>
       )}
-      <ScaleInPressable onPress={takeImageFromGallery} style={styles.addphoto}>
-        <MaterialIcons
-          name="add-photo-alternate"
-          size={50}
-          color={colors.ACCENT}
-        />
-      </ScaleInPressable>
+      {user?._id === data?.userId && (
+        <ScaleInPressable
+          onPress={takeImageFromGallery}
+          style={styles.addphoto}
+        >
+          <MaterialIcons
+            name="add-photo-alternate"
+            size={50}
+            color={colors.ACCENT}
+          />
+        </ScaleInPressable>
+      )}
       {errorUpload && (
         <ScaleInPressable
           onPress={() => setErrorUpload(null)}

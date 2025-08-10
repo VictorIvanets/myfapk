@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { PREFIX_STATIC } from 'src/api/PREFIX';
@@ -8,6 +8,9 @@ import Text from 'src/components/Text';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';
 import { colors } from 'src/theme/colors';
 import type { OneFishingT } from 'src/types/fishing';
+import Button from '../Button';
+import useDeleteFising from 'src/hooks/useDeleteFising';
+import useGetUserInfoInStorage from 'src/hooks/useGetUserInfoInStorage';
 export const DEFAULT_IMG =
   'https://kartinkof.club/uploads/posts/2022-05/1652635208_1-kartinkof-club-p-kartinki-subbota-ribalka-1.jpg';
 
@@ -19,9 +22,14 @@ const FishingCard = ({ item }: FishingCardProps) => {
   const navigation = useAppNavigation();
   const IMG = `${PREFIX_STATIC}static/${item.img[0]?.url}`;
   const dateNormalize = item.date.slice(0, 10).split('-').reverse().join('-');
+  const [deleteItem, setDeleteItem] = useState(false);
+  const { deleteFising } = useDeleteFising();
+  const user = useGetUserInfoInStorage();
 
   return (
     <ScaleInPressable
+      disabled={deleteItem}
+      onLongPress={() => user?._id === item?.userId && setDeleteItem(true)}
       onPress={() => navigation.navigate('Details', { id: item._id })}
     >
       <Flex rel center flex style={styles.item}>
@@ -53,6 +61,26 @@ const FishingCard = ({ item }: FishingCardProps) => {
             style={styles.image}
           />
         </Flex>
+        {deleteItem && (
+          <Flex center gap="s4" abs style={styles.delete}>
+            <Text>Ви дійсно хочете видалити цей запис?</Text>
+            <Flex center gap="s10" row>
+              <Button
+                onPress={() => {
+                  deleteFising(item._id);
+                  setDeleteItem(false);
+                }}
+                view="small"
+                title="ТАК"
+              />
+              <Button
+                onPress={() => setDeleteItem(false)}
+                view="small"
+                title="НІ"
+              />
+            </Flex>
+          </Flex>
+        )}
       </Flex>
     </ScaleInPressable>
   );
@@ -118,6 +146,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderBottomRightRadius: 0,
     borderTopLeftRadius: 0,
+  },
+  delete: {
+    zIndex: 100,
+    width: '100%',
+    height: 130,
+    backgroundColor: colors.SECOND,
+    borderRadius: 10,
+    top: '50%',
+    left: '50%',
+    transform: [{ translateX: '-50%' }, { translateY: '-50%' }],
   },
 });
 

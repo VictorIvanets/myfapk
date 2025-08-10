@@ -2,6 +2,10 @@ export type CoordsT = {
   latitude: number | undefined;
   longitude: number | undefined;
 };
+export type SortCoordsT = {
+  lat: number;
+  lng: number;
+};
 
 export interface MapState {
   coords: CoordsT | undefined;
