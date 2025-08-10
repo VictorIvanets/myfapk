@@ -37,7 +37,7 @@ export const typography = {
   subtitlemin: {
     fontSize: 14,
     fontFamily: 'Raleway-Regular',
-    lineHeight: 15,
+    lineHeight: 17,
   },
   caption: {
     fontSize: 16,

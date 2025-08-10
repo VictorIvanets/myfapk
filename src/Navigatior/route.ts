@@ -13,7 +13,7 @@ export type NavigationStateRoute = NavigationState['routes'][number];
 export type RootHomeTabsParamListT = {
   Home: undefined;
   Map: undefined;
-  Setting: undefined;
+  Rules: undefined;
 };
 
 export type RootStackParamListT = {
@@ -26,8 +26,9 @@ export type RootStackParamListT = {
   Splash: undefined;
   Details: { id: string };
   Registration: undefined;
-  Rules: undefined;
   CreateFishing: { coords?: LeafletViewCoordsT; updata?: OneFishingT };
+  Setting: undefined;
+  Rules: undefined;
 };
 
 export type SceneProps = Parameters<ReturnType<typeof SceneMap>>[number];

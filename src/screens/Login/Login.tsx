@@ -57,7 +57,6 @@ export default function Login() {
                 onBlur={onBlur}
                 value={value}
                 error={errors.login ? errors.login?.message : error?.message}
-                ibackground
               />
             )}
           />
@@ -78,7 +77,6 @@ export default function Login() {
                 error={
                   errors.password ? errors.password?.message : error?.message
                 }
-                ibackground
                 secureTextEntry
               />
             )}

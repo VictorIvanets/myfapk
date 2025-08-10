@@ -18,7 +18,7 @@ const Splash = () => {
   const [sever, setServer] = useState<string>();
 
   useEffect(() => {
-    let interval: number;
+    let interval: NodeJS.Timeout;
 
     const checkServer = async () => {
       try {

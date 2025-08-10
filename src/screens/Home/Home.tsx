@@ -1,4 +1,4 @@
-import { ActivityIndicator, Dimensions, StyleSheet } from 'react-native';
+import { ActivityIndicator, Dimensions, Image, StyleSheet } from 'react-native';
 import Flex from 'src/components/Flex';
 import { colors } from 'src/theme/colors';
 import AllFishing from './Tabs/AllFishing';
@@ -7,12 +7,18 @@ import { FishingTabs } from './Tabs/types';
 import { useMemo } from 'react';
 import { SceneMap } from 'react-native-tab-view';
 import TabView from 'src/components/TabView';
+import Text from 'src/components/Text';
+import useGetUserInfo from 'src/hooks/useGetUserInfo';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
+import ScaleInPressable from 'src/components/ScaleInPressable';
+import { useAppNavigation } from 'src/hooks/useAppNavigation';
 const screenWidth = Dimensions.get('window').width;
 const TAB_WIDTH = screenWidth / 2 - 16;
 
 const Home = () => {
   const userFishingTab = useMemo(() => <UserFishing />, []);
-
+  const { userInfo } = useGetUserInfo();
+  const { navigate } = useAppNavigation();
   const allFishingTab = useMemo(() => <AllFishing />, []);
 
   const renderScene = useMemo(
@@ -26,6 +32,26 @@ const Home = () => {
 
   return (
     <Flex flex gap="s3" style={styles.container}>
+      <Flex style={styles.header} centerH row spread>
+        <Image
+          source={require('../../../assets/images/logoMf-01.png')}
+          style={styles.image}
+        />
+        <ScaleInPressable onPress={() => navigate('Setting')}>
+          <Flex centerH row gap="s1">
+            <Flex right gap="s1">
+              <Text size="subtitlemin"> {userInfo?.name}</Text>
+              <Text size="subtitlemin"> {userInfo?.city}</Text>
+              <Text size="subtitlemin"> {userInfo?.country}</Text>
+            </Flex>
+            <MaterialIcons
+              name="account-circle"
+              size={50}
+              color={colors.ACCENT}
+            />
+          </Flex>
+        </ScaleInPressable>
+      </Flex>
       <TabView
         tabStyle={styles.tabStyle}
         tabBarStyle={styles.tabBar}
@@ -73,6 +99,17 @@ const styles = StyleSheet.create({
   },
   label: {
     color: colors.RED,
+  },
+  image: {
+    width: 160,
+    height: 60,
+    resizeMode: 'contain',
+  },
+  header: {
+    borderBottomColor: colors.SECOND,
+    borderBottomWidth: 3,
+    paddingBottom: 10,
+    borderRadius: 15,
   },
 });
 

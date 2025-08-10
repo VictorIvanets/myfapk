@@ -4,7 +4,7 @@ import type { RootHomeTabsParamListT } from 'src/Navigatior/route';
 import Map from 'src/screens/Map/Map';
 import { colors } from 'src/theme/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Setting from 'src/screens/Setting/Setting';
+import Rules from 'src/screens/Rules/Rules';
 
 const Tabs = createBottomTabNavigator<RootHomeTabsParamListT>();
 
@@ -47,10 +47,10 @@ export const HomeTabs = () => {
         }}
       />
       <Tabs.Screen
-        name="Setting"
-        component={Setting}
+        name="Rules"
+        component={Rules}
         options={{
-          title: 'Налаштування',
+          title: 'Правила',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="settings-sharp" size={size} color={color} />
           ),
