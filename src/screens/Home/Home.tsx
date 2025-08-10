@@ -29,6 +29,7 @@ const Home = () => {
       <TabView
         tabStyle={styles.tabStyle}
         tabBarStyle={styles.tabBar}
+        labelStyle={styles.label}
         indicatorStyle={{
           width: TAB_WIDTH,
           backgroundColor: colors.ACCENT50,
@@ -69,6 +70,9 @@ const styles = StyleSheet.create({
     width: TAB_WIDTH,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  label: {
+    color: colors.RED,
   },
 });
 
