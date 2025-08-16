@@ -18,6 +18,9 @@ const useCreateFising = () => {
         queryKey: [QUERY_KEY.ALL_FISH],
       });
       queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.PAID],
+      });
+      queryClient.invalidateQueries({
         queryKey: [QUERY_KEY.ALL_FISH_USER],
       });
       queryClient.invalidateQueries({

@@ -1,19 +1,36 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import type { TabProps } from './types';
+import type { TabCommentProps } from './types';
 import Flex from 'src/components/Flex';
-import Text from 'src/components/Text';
-import { colors } from 'src/theme/colors';
+import Comments from 'src/features/Comments/Comments';
+import useGetUserInfo from 'src/hooks/useGetUserInfo';
+import AddComment from 'src/features/Comments/AddComment';
 
-const CommentsTab = ({ data }: TabProps) => {
+const CommentsTab = ({
+  data,
+  comments,
+  isLoading,
+  refetch,
+}: TabCommentProps) => {
+  const { userInfo: currentUser } = useGetUserInfo();
   return (
-    <Flex style={styles.container}>
-      <Text size="h3" color="ACCENT">
-        {data?._id}
-      </Text>
-      <Text size="h3" color="ACCENT">
-        COMMENTS
-      </Text>
+    <Flex spread style={styles.container}>
+      <Flex style={styles.commentbox}>
+        {data && currentUser && (
+          <Comments
+            refetch={refetch}
+            data={data}
+            comments={comments}
+            isLoading={isLoading}
+            currentUser={currentUser}
+          />
+        )}
+      </Flex>
+      <Flex style={styles.addcommentbox}>
+        {data && currentUser && (
+          <AddComment data={data} currentUser={currentUser} />
+        )}
+      </Flex>
     </Flex>
   );
 };
@@ -21,8 +38,13 @@ const CommentsTab = ({ data }: TabProps) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 12,
-    backgroundColor: colors.ACCENT50,
+  },
+  commentbox: {
+    flex: 1,
+  },
+  addcommentbox: {
+    height: 100,
+    width: '100%',
   },
 });
 

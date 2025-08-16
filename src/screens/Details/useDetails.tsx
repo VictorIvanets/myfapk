@@ -6,16 +6,25 @@ import CommentsTab from './Tabs/CoomentsTab';
 import type { Route } from 'react-native-tab-view';
 import { SceneMap } from 'react-native-tab-view';
 import { DateilsTabs } from './Tabs/types';
+import useGetCommens from 'src/hooks/useGetComments';
 
 export const useDetails = (id: string) => {
   const { data: oneFishing } = useGetOneFishing(id);
+  const { comments, isLoading, refetch } = useGetCommens(id);
 
   const photoTab = useMemo(() => <PhotoTab data={oneFishing} />, [oneFishing]);
 
   const infoTab = useMemo(() => <InfoTab data={oneFishing} />, [oneFishing]);
   const commentsTab = useMemo(
-    () => <CommentsTab data={oneFishing} />,
-    [oneFishing],
+    () => (
+      <CommentsTab
+        data={oneFishing}
+        comments={comments}
+        isLoading={isLoading}
+        refetch={refetch}
+      />
+    ),
+    [oneFishing, comments, isLoading, refetch],
   );
 
   const renderScene = useMemo(
@@ -39,7 +48,7 @@ export const useDetails = (id: string) => {
     },
     {
       key: DateilsTabs.COMMENTS,
-      title: 'КОММЕНТАРІ',
+      title: comments?.length ? `КОММЕНТ (${comments?.length})` : 'КОММЕНТАРІ',
     },
   ];
 

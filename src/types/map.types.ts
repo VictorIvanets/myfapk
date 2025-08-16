@@ -1,3 +1,5 @@
+import type { PaidFishingT } from './fishing';
+
 export type CoordsT = {
   latitude: number | undefined;
   longitude: number | undefined;
@@ -20,4 +22,6 @@ export type LeafletViewCoordsT = {
   description?: string;
   title?: string;
   score?: number;
+  paid?: PaidFishingT;
+  userId?: string;
 };

@@ -11,6 +11,7 @@ import type { UserLogInDataFields } from './userLogInSchema';
 import { userLogInSchema } from './userLogInSchema';
 import type { LoginPayloadT } from 'src/types/auth.types';
 import { zodResolver } from '@hookform/resolvers/zod';
+import cleanObjectStrings from 'src/helpers/cleanObjectStrings';
 
 export default function Login() {
   const navigation = useAppNavigation();
@@ -30,7 +31,7 @@ export default function Login() {
   });
 
   const onSubmit = (data: LoginPayloadT) => {
-    logIn(data);
+    logIn(cleanObjectStrings(data));
     reset();
   };
 

@@ -13,6 +13,8 @@ export type NavigationStateRoute = NavigationState['routes'][number];
 export type RootHomeTabsParamListT = {
   Home: undefined;
   Map: undefined;
+  Paid: undefined;
+  Advertising: undefined;
   Rules: undefined;
 };
 

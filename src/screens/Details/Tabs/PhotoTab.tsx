@@ -8,13 +8,13 @@ import type { ResponseGetPhoto } from 'src/types/photo.types';
 import { colors } from 'src/theme/colors';
 import useGetUserInfoInStorage from 'src/hooks/useGetUserInfoInStorage';
 import { ScrollView } from 'react-native-gesture-handler';
-import PhotoItem from 'src/components/PhotoItem/PhotoItem';
 import ScaleInPressable from 'src/components/ScaleInPressable';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 import { handleSelectImage } from 'src/helpers/handleSelectImage';
 import { launchImageLibrary } from 'react-native-image-picker';
 import FormData from 'form-data';
 import useUploadPhoto from 'src/hooks/useUploadPhoto';
+import PhotoItem from 'src/features/PhotoItem/PhotoItem';
 
 const PhotoTab = ({ data }: TabProps) => {
   const user = useGetUserInfoInStorage();

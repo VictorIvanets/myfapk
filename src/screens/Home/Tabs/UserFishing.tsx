@@ -5,9 +5,9 @@ import Divider from 'src/components/Divider';
 import Flex from 'src/components/Flex';
 import InputField from 'src/components/InputField/InputField';
 import Text from 'src/components/Text';
+import FishingCard from 'src/features/FishingCard/FishingCard';
 import useGetAllByUser from 'src/hooks/useGetAllByUser';
 import { colors } from 'src/theme/colors';
-import FishingCard from '../../../components/FishingCard/FishingCard';
 
 const UserFishing = () => {
   const {

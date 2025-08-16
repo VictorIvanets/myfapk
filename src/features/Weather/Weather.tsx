@@ -1,9 +1,9 @@
 import type { WeatherT } from 'src/types/weather.types';
 import { useEffect, useState } from 'react';
 import { getWeatherApi } from 'src/services/getWeather';
-import Flex from '../Flex';
+import Flex from '../../components/Flex';
 import type { SortCoordsT } from 'src/types/map.types';
-import Text from '../Text';
+import Text from '../../components/Text';
 
 interface WeatherProps {
   data?: WeatherT;
@@ -41,7 +41,8 @@ const Weather = ({ data, coords }: WeatherProps) => {
   }
 
   return (
-    <Flex bg="SECOND20">
+    // eslint-disable-next-line react-native/no-inline-styles
+    <Flex style={{ paddingVertical: 10, marginVertical: 10 }} bg="SECOND20">
       <Text color="ACCENT" size="Bsubtitle">
         Погода на момент створення запису
       </Text>

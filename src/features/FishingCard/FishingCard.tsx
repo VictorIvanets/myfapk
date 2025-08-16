@@ -8,9 +8,9 @@ import Text from 'src/components/Text';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';
 import { colors } from 'src/theme/colors';
 import type { OneFishingT } from 'src/types/fishing';
-import Button from '../Button';
 import useDeleteFising from 'src/hooks/useDeleteFising';
 import useGetUserInfoInStorage from 'src/hooks/useGetUserInfoInStorage';
+import Button from 'src/components/Button';
 export const DEFAULT_IMG =
   'https://kartinkof.club/uploads/posts/2022-05/1652635208_1-kartinkof-club-p-kartinki-subbota-ribalka-1.jpg';
 

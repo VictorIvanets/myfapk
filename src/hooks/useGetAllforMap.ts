@@ -20,6 +20,8 @@ const useGetAllforMap = () => {
         description: i.description,
         title: i.title,
         score: i.score,
+        paid: i.paid ? i.paid : undefined,
+        userId: i.userId,
       };
     });
   }, [data]);

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { StyleSheet, Image } from 'react-native';
-import ScaleInPressable from '../ScaleInPressable';
-import Button from '../Button';
-import Flex from '../Flex';
 import { colors } from 'src/theme/colors';
 import { PREFIX_STATIC } from 'src/api/PREFIX';
 import type { ResponseGetPhoto } from 'src/types/photo.types';
 import type { OneFishingT } from 'src/types/fishing';
 import useDeletePhoto from 'src/hooks/useDeletePhoto';
-import Text from '../Text';
 import useGetUserInfoInStorage from 'src/hooks/useGetUserInfoInStorage';
+import ScaleInPressable from 'src/components/ScaleInPressable';
+import Flex from 'src/components/Flex';
+import Button from 'src/components/Button';
+import Text from 'src/components/Text';
 
 type Props = {
   data: OneFishingT;

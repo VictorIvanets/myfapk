@@ -46,6 +46,9 @@ const useUpdateFising = () => {
           return { ...prev, pages };
         },
       );
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.PAID],
+      });
     },
   });
   const queryClient = useQueryClient();

@@ -17,6 +17,9 @@ const useDeleteFising = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY.ALL_FISH],
       });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.PAID],
+      });
     },
   });
 

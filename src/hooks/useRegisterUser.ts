@@ -1,14 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
-import { STORAGE_KEYS_ACCESS_TOKEN } from 'src/api/PREFIX';
-import { saveState } from 'src/api/storage';
 import { loginServices } from 'src/services/Login.services';
-import type { LoginPayloadT } from 'src/types/auth.types';
-import { useAppNavigation } from './useAppNavigation';
+import type { RegisterPayloadT } from 'src/types/auth.types';
 import { Alert } from 'react-native';
+import useLogIn from './useLogIn';
 
-const useLogIn = () => {
+const useRegisterUser = () => {
   const mutation = useMutation({
-    mutationFn: loginServices.login,
+    mutationFn: loginServices.register,
     onError: error => {
       Alert.alert(
         'ERROR',
@@ -21,23 +19,24 @@ const useLogIn = () => {
       );
     },
   });
-  const { mutate, isPending, error, isError } = mutation;
-  const navigation = useAppNavigation();
 
-  const logIn = (payload: LoginPayloadT) => {
+  const { mutate, isPending, error, isError } = mutation;
+  const { logIn } = useLogIn();
+
+  const register = (payload: RegisterPayloadT) => {
     mutate(payload, {
       onSuccess(response) {
-        navigation.navigate('HomeTabs');
-        saveState(response, STORAGE_KEYS_ACCESS_TOKEN);
+        response && logIn({ login: payload.login, password: payload.password });
       },
     });
   };
+
   return {
-    logIn,
+    register,
     isLoading: isPending,
     error,
     isError,
   };
 };
 
-export default useLogIn;
+export default useRegisterUser;

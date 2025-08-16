@@ -34,7 +34,6 @@ const Map = () => {
   }, []);
 
   const handleMapClick = (event: any) => {
-    console.log(event);
     if (event.event === 'onMapClicked') {
       const { lat, lng } = event.payload.touchLatLng;
       setMarkers([{ lat, lng }]);
@@ -117,36 +116,3 @@ const styles = StyleSheet.create({
 });
 
 export default Map;
-
-// <Flex center flex>
-//   <Text size="h1" style={styles.text}>
-//     Main
-//   </Text>
-//   <Text color="ACCENT" size="Bh1" style={styles.text}>
-//     Main
-//   </Text>
-//   {/* <Text size="h2" style={styles.text}>
-//     Main
-//   </Text>
-//   <Text size="h3" style={styles.text}>
-//     Main
-//   </Text>
-//   <Text size="h4" style={styles.text}>
-//     Main
-//   </Text>
-//   <Text style={styles.text}>Main</Text>
-//   <Button view="small" title="small" />
-//   <Button view="max" title="Maximum" /> */}
-// </Flex>
-// <InputText />
-// <Button onPress={() => navigation.navigate('Login')} title="Login" />
-// <Button
-//   title="Перейти на Home"
-//   onPress={() => navigation.navigate('Home')}
-// />
-// <Button
-//   title="Details"
-//   onPress={() => navigation.navigate('Details', data)}
-// />
-
-// <Loader />

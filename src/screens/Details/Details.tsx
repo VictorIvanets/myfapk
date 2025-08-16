@@ -1,7 +1,6 @@
 import type { StackScreenProps } from '@react-navigation/stack';
 import { ActivityIndicator, Dimensions, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Button from 'src/components/Button';
 import FadeInView from 'src/components/FadeInView';
 import Flex from 'src/components/Flex';
 import Text from 'src/components/Text';
@@ -10,6 +9,8 @@ import type { RootStackParamListT } from 'src/Navigatior/route';
 import { colors } from 'src/theme/colors';
 import TabView from 'src/components/TabView';
 import { useDetails } from './useDetails';
+import ScaleInPressable from 'src/components/ScaleInPressable';
+
 const screenWidth = Dimensions.get('window').width;
 const TAB_WIDTH = screenWidth / 3;
 
@@ -22,16 +23,25 @@ const Details = ({ route }: Props) => {
 
   return (
     <FadeInView style={styles.container}>
-      <Flex style={styles.header}>
-        <Text color="TEXTDARK">Назва/Місце:</Text>
-        <Text size="Bh4">
-          {oneFishing?.title}{' '}
-          <Text size="caption">
-            <Ionicons name="star" size={14} color={colors.ACCENT} />{' '}
-            {oneFishing?.score}
+      <Flex spread style={styles.containerrow} row>
+        <Flex flex style={styles.header}>
+          <Text color="TEXTDARK">Назва/Місце:</Text>
+          <Text size="Bh4">
+            {oneFishing?.title}{' '}
+            <Text size="caption">
+              <Ionicons name="star" size={14} color={colors.ACCENT} />{' '}
+              {oneFishing?.score}
+            </Text>
           </Text>
-        </Text>
+        </Flex>
+        <ScaleInPressable
+          onPress={() => navigation.goBack()}
+          style={styles.back}
+        >
+          <Ionicons name="chevron-back" size={45} color={colors.ACCENT} />
+        </ScaleInPressable>
       </Flex>
+
       <Flex flex>
         <TabView
           tabStyle={styles.tabStyle}
@@ -51,9 +61,6 @@ const Details = ({ route }: Props) => {
           renderScene={renderScene}
         />
       </Flex>
-      <Flex center style={styles.footer}>
-        <Button view="max" title="Назад" onPress={() => navigation.goBack()} />
-      </Flex>
     </FadeInView>
   );
 };
@@ -63,14 +70,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.MAIN,
   },
-  header: {
-    padding: 12,
-    paddingBottom: 10,
+  containerrow: {
+    width: '100%',
     borderBottomWidth: 3,
     borderColor: colors.SECOND,
   },
-  footer: {
+  header: {
     padding: 12,
+    paddingBottom: 10,
   },
   tabBar: {
     alignSelf: 'stretch',
@@ -81,6 +88,10 @@ const styles = StyleSheet.create({
     width: TAB_WIDTH,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  back: {
+    height: '100%',
+    transform: [{ translateX: 0 }, { translateY: 20 }],
   },
 });
 

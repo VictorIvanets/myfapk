@@ -6,7 +6,7 @@ import Text from 'src/components/Text';
 import { colors } from 'src/theme/colors';
 import ScaleInPressable from 'src/components/ScaleInPressable';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import Weather from 'src/components/Weather/Weather';
+import Weather from 'src/features/Weather/Weather';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const InfoTab = ({ data }: TabProps) => {
@@ -18,8 +18,15 @@ const InfoTab = ({ data }: TabProps) => {
     );
   };
 
-  const dateNormalize = data?.date.slice(0, 10).split('-').reverse().join('-');
+  const callNumber = (phone: string) => {
+    const url = `tel:${phone}`;
+    Linking.openURL(url).catch(err =>
+      console.error('Не вдалося відкрити набір номера', err),
+    );
+  };
 
+  const dateNormalize = data?.date.slice(0, 10).split('-').reverse().join('-');
+  console.log(data?.paid?.contact);
   return (
     <Flex spread style={styles.container}>
       <ScrollView>
@@ -31,22 +38,51 @@ const InfoTab = ({ data }: TabProps) => {
               </Text>
               <Text color="TEXT">{data?.description}</Text>
             </Flex>
-
-            <Flex gap="s2">
-              <Text size="caption">Дата створення: {dateNormalize}</Text>
-              <Text size="caption" color="TEXTDARK">
-                Створив: {data?.userName}
-              </Text>
-              <Text size="caption" color="ACCENT">
-                Оцінка: {data?.score}
-              </Text>
-            </Flex>
           </Flex>
-
-          <Weather data={data?.weather} />
         </Flex>
       </ScrollView>
-
+      {data?.paid ? (
+        <>
+          <Flex style={styles.info} gap="s2">
+            <Text color="ACCENT" size="headline">
+              {data.paid.title}
+            </Text>
+            <Text size="caption">Власник: {data.paid.owner}</Text>
+            <Text size="headline" color="ACCENT">
+              Ціна: {data.paid.price}
+            </Text>
+            <Text size="caption" color="ACCENT">
+              Контакти
+            </Text>
+            {data.paid.contact &&
+              data.paid.contact.map((i, index) => (
+                <Text
+                  onLongPress={() => callNumber(i)}
+                  key={index}
+                  size="captionbig"
+                  color="ACCENT"
+                >
+                  ☎ {i}
+                </Text>
+              ))}
+          </Flex>
+        </>
+      ) : (
+        <>
+          <Flex style={styles.info} gap="s2">
+            <Text color="ACCENT" size="caption">
+              Дата створення: {dateNormalize}
+            </Text>
+            <Text size="caption" color="TEXTDARK">
+              Створив: {data?.userName}
+            </Text>
+            <Text size="caption" color="ACCENT">
+              Оцінка: {data?.score}
+            </Text>
+          </Flex>
+          <Weather data={data?.weather} />
+        </>
+      )}
       <Flex>
         <ScaleInPressable onPress={openGoogleMaps}>
           <Flex row center>
@@ -67,6 +103,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 12,
+  },
+  info: {
+    marginVertical: 10,
   },
 });
 

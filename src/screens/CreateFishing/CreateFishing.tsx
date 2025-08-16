@@ -12,7 +12,7 @@ import { getWeatherApi } from 'src/services/getWeather';
 import type { WeatherT } from 'src/types/weather.types';
 import type { AddFishingSchemaDataFields } from './addFishingSchema';
 import { addFishingSchema } from './addFishingSchema';
-import type { FishingPayloadT } from 'src/types/fishing';
+import type { FishingPayloadT, PaidFishingT } from 'src/types/fishing';
 import InputField from 'src/components/InputField/InputField';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
@@ -20,6 +20,8 @@ import useUpdateFising from 'src/hooks/useUpdateFising';
 import Button from 'src/components/Button';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';
 import { ScrollView } from 'react-native-gesture-handler';
+import useGetUserInfoInStorage from 'src/hooks/useGetUserInfoInStorage';
+import { cleanStr } from 'src/helpers/cleanObjectStrings';
 
 type Props = StackScreenProps<RootStackParamListT, 'CreateFishing'>;
 
@@ -33,6 +35,7 @@ const CreateFishing = ({ route }: Props) => {
   const hideDatePicker = () => setDatePickerVisibility(false);
   const { create } = useCreateFising();
   const { updateFishing } = useUpdateFising();
+  const currentUser = useGetUserInfoInStorage();
 
   const getWeather = async () => {
     if (coords) {
@@ -58,6 +61,10 @@ const CreateFishing = ({ route }: Props) => {
       description: updata ? updata.description : '',
       score: updata ? updata.score : 0,
       date: updata ? updata.date : '',
+      paidTitle: '',
+      paidOwner: '',
+      paidPrise: 0,
+      paidContact: '',
     },
   });
 
@@ -66,8 +73,19 @@ const CreateFishing = ({ route }: Props) => {
     description: string;
     score: number;
     date: string;
+    paidTitle: string;
+    paidOwner: string;
+    paidPrise: number;
+    paidContact: string;
   }) => {
     if (weather && coords) {
+      const paidFishing: PaidFishingT = {
+        title: payload.paidTitle,
+        price: payload.paidPrise,
+        owner: payload.paidOwner,
+        contact: cleanStr(payload.paidContact).split(', '),
+      };
+
       const paramsFishing: FishingPayloadT = {
         title: payload.title.replace(/\s+/g, ' ').trim(),
         description: payload.description.replace(/\s+/g, ' ').trim(),
@@ -76,9 +94,14 @@ const CreateFishing = ({ route }: Props) => {
         coords: [coords.lat, coords.lng],
         img: [],
         weather: weather,
+        paid:
+          currentUser &&
+          currentUser.login === 'admin' &&
+          payload.paidTitle !== ''
+            ? paidFishing
+            : undefined,
       };
       create(paramsFishing);
-      // navigate('HomeTabs');
     }
     reset();
   };
@@ -230,6 +253,84 @@ const CreateFishing = ({ route }: Props) => {
                 />
               )}
             />
+            {currentUser && currentUser.login === 'admin' && (
+              <>
+                <Text color="ACCENT" size="h4" center>
+                  Данні для платних рибалок
+                </Text>
+                <Controller
+                  control={control}
+                  name="paidTitle"
+                  render={({
+                    field: { onChange, onBlur, value },
+                    // fieldState: { error },
+                  }) => (
+                    <InputField
+                      label="Назва Місця"
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      // error={errors.title ? errors.title?.message : error?.message}
+                      ibackground
+                    />
+                  )}
+                />
+                <Controller
+                  control={control}
+                  name="paidOwner"
+                  render={({
+                    field: { onChange, onBlur, value },
+                    // fieldState: { error },
+                  }) => (
+                    <InputField
+                      label="Власник"
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      // error={errors.title ? errors.title?.message : error?.message}
+                      ibackground
+                    />
+                  )}
+                />
+                <Controller
+                  control={control}
+                  name="paidContact"
+                  render={({
+                    field: { onChange, onBlur, value },
+                    // fieldState: { error },
+                  }) => (
+                    <InputField
+                      label="Контакти через ', '"
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      // error={errors.title ? errors.title?.message : error?.message}
+                      ibackground
+                    />
+                  )}
+                />
+                <Controller
+                  control={control}
+                  name="paidPrise"
+                  render={({
+                    field: { onChange, onBlur, value },
+                    // fieldState: { error },
+                  }) => (
+                    <InputField
+                      keyboardType="numeric"
+                      label="Ціна"
+                      onChangeText={text => onChange(Number(text))}
+                      onBlur={onBlur}
+                      value={value.toString()}
+                      // error={
+                      //   errors.score ? errors.score?.message : error?.message
+                      // }
+                      ibackground
+                    />
+                  )}
+                />
+              </>
+            )}
           </Flex>
         </Flex>
       </ScrollView>

@@ -1,56 +1,65 @@
-import type { WeatherT } from "./weather.types"
+import type { WeatherT } from './weather.types';
 
 export type FishingPayloadT = {
-  title: string
-  description: string
-  score: number
-  date: string
-  coords: [number, number]
-  img: ImageT[]
-  weather: WeatherT
-}
+  title: string;
+  description: string;
+  score: number;
+  date: string;
+  coords: [number, number];
+  img: ImageT[];
+  weather: WeatherT;
+  paid?: PaidFishingT;
+};
 
 export type OneFishingT = {
-  _id: string
-  folderName: number
-  userName: string
-  userId: string
-  title: string
-  description: string
-  score: number
-  date: string
-  coords: [number, number]
-  db: string
-  img: ImageT[]
+  _id: string;
+  folderName: number;
+  userName: string;
+  userId: string;
+  title: string;
+  description: string;
+  score: number;
+  date: string;
+  coords: [number, number];
+  db: string;
+  img: ImageT[];
   weather: {
-    deg: number
-    feels_like: number
-    grnd_level: number
-    gust: number
-    humidity: number
-    pressure: number
-    sea_level: number
-    sky: string
-    speed: number
-    temp: number
-    temp_max: number
-    temp_min: number
-  }
-  createdA: string
-  updatedAt: string
-}
+    deg: number;
+    feels_like: number;
+    grnd_level: number;
+    gust: number;
+    humidity: number;
+    pressure: number;
+    sea_level: number;
+    sky: string;
+    speed: number;
+    temp: number;
+    temp_max: number;
+    temp_min: number;
+  };
+  createdA: string;
+  updatedAt: string;
+  paid?: PaidFishingT;
+};
 
 export type FishingResponseT = {
-  data: OneFishingT[]
-  nextCursor: string | null
-}
+  data: OneFishingT[];
+  nextCursor: string | null;
+};
 
 export type ImageT = {
-  imgId: string
-  url: string
-}
+  imgId: string;
+  url: string;
+};
 
 export type ResponseForMapT = Pick<
   OneFishingT,
-  "_id" | "title" | "coords" | "score" | "description" | "userId"
->
+  '_id' | 'title' | 'coords' | 'score' | 'description' | 'userId' | 'paid'
+>;
+
+export type PaidFishingT = {
+  title: string;
+  price: number;
+  owner: string;
+  contact: string[];
+};

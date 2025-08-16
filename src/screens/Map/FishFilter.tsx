@@ -12,17 +12,18 @@ interface FilterProps {
 }
 
 const FishFilter = ({ allFishins, setFilterAll }: FilterProps) => {
-  const user = useGetUserInfoInStorage();
+  const userId = useGetUserInfoInStorage();
 
-  const userId = user;
   const [value, setValue] = useState<string>();
 
   useEffect(() => {
     if (value === 'my' && userId) {
-      const result = allFishins.filter(i => i.id === userId._id);
+      const result = allFishins.filter(i => i.userId === userId._id);
+      setFilterAll(result);
+    } else if (value === 'paid') {
+      const result = allFishins.filter(i => i.paid !== undefined);
       setFilterAll(result);
     } else if (value === 'rating7') {
-      console.log(value);
       const result = allFishins.filter(i => i.score && i.score >= 7);
       setFilterAll(result);
     } else if (value) {
@@ -43,6 +44,8 @@ const FishFilter = ({ allFishins, setFilterAll }: FilterProps) => {
         view="small"
         title="Всі місця"
       />
+      <Button onPress={() => setValue('my')} view="small" title="Мої" />
+      <Button onPress={() => setValue('paid')} view="small" title="Платні" />
       <Button
         onPress={() => setValue('короп')}
         outline

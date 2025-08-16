@@ -44,6 +44,11 @@ export const typography = {
     fontFamily: 'Roboto-Regular',
     lineHeight: 15,
   },
+  captionbig: {
+    fontSize: 20,
+    fontFamily: 'Roboto-Regular',
+    lineHeight: 18,
+  },
 
   Bh1: {
     fontSize: 40,

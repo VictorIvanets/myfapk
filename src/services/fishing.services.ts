@@ -93,6 +93,28 @@ class FishingServices {
     }
   }
 
+  public async getPaid(
+    cursor?: string,
+    title?: string,
+    description?: string,
+    limit = 4,
+  ): Promise<FishingResponseT> {
+    try {
+      const result = await api.get(API_ENDPOINTS.FISHING.GET_PAID, {
+        params: { cursor, limit, title, description },
+      });
+      return result.data;
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        if (e.response?.data) {
+          throw new Error(e.response.data.message);
+        }
+        throw new Error(e.message);
+      }
+      throw new Error('Unexpected error');
+    }
+  }
+
   public async getAllforMap(): Promise<ResponseForMapT[]> {
     try {
       const result = await api.get(API_ENDPOINTS.FISHING.GET_ALL_FOR_MAP);
