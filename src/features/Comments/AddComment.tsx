@@ -20,9 +20,6 @@ interface AddCommentProps {
 }
 
 const AddComment = ({ data, currentUser }: AddCommentProps) => {
-  console.log('ADD');
-  console.log(data);
-  console.log(currentUser);
   const { create } = useCreateComment(data._id);
 
   const {

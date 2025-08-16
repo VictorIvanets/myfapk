@@ -34,7 +34,7 @@ const CreateFishing = ({ route }: Props) => {
   const showDatePicker = () => setDatePickerVisibility(true);
   const hideDatePicker = () => setDatePickerVisibility(false);
   const { create } = useCreateFising();
-  const { updateFishing } = useUpdateFising();
+  const { updateFishing } = useUpdateFising(updata?._id);
   const currentUser = useGetUserInfoInStorage();
 
   const getWeather = async () => {
@@ -61,10 +61,10 @@ const CreateFishing = ({ route }: Props) => {
       description: updata ? updata.description : '',
       score: updata ? updata.score : 0,
       date: updata ? updata.date : '',
-      paidTitle: '',
-      paidOwner: '',
-      paidPrise: 0,
-      paidContact: '',
+      paidTitle: updata && updata.paid ? updata.paid?.title : '',
+      paidOwner: updata && updata.paid ? updata.paid?.owner : '',
+      paidPrise: updata && updata.paid ? updata.paid?.price : 0,
+      paidContact: updata && updata.paid ? updata.paid?.contact.join(', ') : '',
     },
   });
 
@@ -111,8 +111,19 @@ const CreateFishing = ({ route }: Props) => {
     description: string;
     score: number;
     date: string;
+    paidTitle: string;
+    paidOwner: string;
+    paidPrise: number;
+    paidContact: string;
   }) => {
     if (updata) {
+      const paidFishing: PaidFishingT = {
+        title: data.paidTitle,
+        price: data.paidPrise,
+        owner: data.paidOwner,
+        contact: cleanStr(data.paidContact).split(', '),
+      };
+
       const updateParamsFishing: Omit<
         FishingPayloadT,
         'coords' | 'img' | 'weather'
@@ -121,6 +132,10 @@ const CreateFishing = ({ route }: Props) => {
         description: data.description.replace(/\s+/g, ' ').trim(),
         score: data.score,
         date: data.date,
+        paid:
+          currentUser && currentUser.login === 'admin' && updata.paid
+            ? paidFishing
+            : undefined,
       };
       const _id = updata?._id || '';
       const payload = { ...updata, ...updateParamsFishing };

@@ -12,7 +12,7 @@ export type NavigationStateRoute = NavigationState['routes'][number];
 
 export type RootHomeTabsParamListT = {
   Home: undefined;
-  Map: undefined;
+  Map: { coords?: LeafletViewCoordsT };
   Paid: undefined;
   Advertising: undefined;
   Rules: undefined;
@@ -31,6 +31,7 @@ export type RootStackParamListT = {
   CreateFishing: { coords?: LeafletViewCoordsT; updata?: OneFishingT };
   Setting: undefined;
   Rules: undefined;
+  Map: { coords?: LeafletViewCoordsT };
 };
 
 export type SceneProps = Parameters<ReturnType<typeof SceneMap>>[number];

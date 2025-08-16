@@ -36,6 +36,7 @@ const Details = ({ route }: Props) => {
         </Flex>
         <ScaleInPressable
           onPress={() => navigation.goBack()}
+          onLongPress={() => navigation.navigate('HomeTabs')}
           style={styles.back}
         >
           <Ionicons name="chevron-back" size={45} color={colors.ACCENT} />

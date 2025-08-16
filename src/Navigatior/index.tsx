@@ -9,6 +9,7 @@ import CreateFishing from 'src/screens/CreateFishing/CreateFishing';
 import { HomeTabs } from './HomeTabs';
 import Setting from 'src/screens/Setting/Setting';
 import Rules from 'src/screens/Rules/Rules';
+import Map from 'src/screens/Map/Map';
 
 const Stack = createStackNavigator<RootStackParamListT>();
 
@@ -31,6 +32,7 @@ const Navigator = (): React.JSX.Element => {
       <Stack.Screen name="Setting" component={Setting} />
       <Stack.Screen name="Rules" component={Rules} />
       <Stack.Screen name="CreateFishing" component={CreateFishing} />
+      <Stack.Screen name="Map" component={Map} />
     </Stack.Navigator>
   );
 };

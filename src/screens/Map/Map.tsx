@@ -15,8 +15,12 @@ import {
 import { requestLocationPermission } from './requestLocationPermission';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';
 import FishFilter from './FishFilter';
+import type { StackScreenProps } from '@react-navigation/stack';
+import type { RootStackParamListT } from 'src/Navigatior/route';
 
-const Map = () => {
+type Props = StackScreenProps<RootStackParamListT, 'Map'>;
+
+const Map = ({ route }: Props) => {
   const navigation = useAppNavigation();
   const [location, setLocation] = useState<LeafletViewCoordsT | null>(null);
   const [markers, setMarkers] = useState<LeafletViewCoordsT[]>([]);
@@ -24,6 +28,7 @@ const Map = () => {
   const [zoom, setZoom] = useState<number>(13);
   const { markerData } = useGetAllforMap();
   const [filterAll, setFilterAll] = useState<LeafletViewCoordsT[]>([]);
+  const detailsData = route.params;
 
   useEffect(() => {
     markerData && setFilterAll(markerData);
@@ -41,7 +46,11 @@ const Map = () => {
     }
 
     if (event.event === 'onMapMarkerClicked') {
-      if (viewAll && filterAll) {
+      if (detailsData && detailsData.coords) {
+        const { mapMarkerID } = event.payload;
+        if (mapMarkerID === 'OWN_POSTION_MARKER_ID') return;
+        else mapMarkerID && navigation.navigate('Details', { id: mapMarkerID });
+      } else if (viewAll && filterAll) {
         const { mapMarkerID } = event.payload;
         if (mapMarkerID === 'OWN_POSTION_MARKER_ID') return;
         else mapMarkerID && navigation.navigate('Details', { id: mapMarkerID });
@@ -61,10 +70,18 @@ const Map = () => {
         <LeafletView
           zoom={zoom}
           zoomControl={false}
-          mapCenterPosition={markers.length ? markers[0] : location}
+          mapCenterPosition={
+            detailsData && detailsData.coords
+              ? detailsData.coords
+              : markers.length
+              ? markers[0]
+              : location
+          }
           onMessageReceived={handleMapClick}
           mapMarkers={
-            viewAll && filterAll
+            detailsData && detailsData.coords
+              ? markerAllFishing([detailsData.coords])
+              : viewAll && filterAll
               ? markerAllFishing(filterAll)
               : markerSetFishing(markers)
           }
@@ -73,18 +90,22 @@ const Map = () => {
       ) : (
         <ActivityIndicator size={120} color={colors.ACCENT} />
       )}
-      <Flex center style={styles.box}>
-        <Button
-          onPress={() => {
-            viewAll ? setZoom(13) : setZoom(11);
-            setViewAll(!viewAll);
-            !viewAll && setLocation(location);
-            !viewAll && setMarkers([]);
-          }}
-          view="small"
-          title={viewAll ? 'закрити' : 'всі мітки'}
-        />
-      </Flex>
+      {detailsData && detailsData.coords ? (
+        <></>
+      ) : (
+        <Flex center style={styles.box}>
+          <Button
+            onPress={() => {
+              viewAll ? setZoom(13) : setZoom(11);
+              setViewAll(!viewAll);
+              !viewAll && setLocation(location);
+              !viewAll && setMarkers([]);
+            }}
+            view="small"
+            title={viewAll ? 'закрити' : 'всі мітки'}
+          />
+        </Flex>
+      )}
       {markerData && viewAll && (
         <Flex center style={styles.filter}>
           <FishFilter allFishins={markerData} setFilterAll={setFilterAll} />

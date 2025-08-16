@@ -1,53 +1,25 @@
-import {
-  useMutation,
-  useQueryClient,
-  type InfiniteData,
-} from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { fishingServices } from 'src/services/fishing.services';
 import { QUERY_KEY } from 'src/types/constants';
-import type { FishingResponseT } from 'src/types/fishing';
 
-const useUpdateFising = () => {
+const useUpdateFising = (id: string | undefined) => {
   const mutation = useMutation({
     mutationFn: fishingServices.update,
     onError: error => {
       console.log(error);
     },
-    onSuccess(response) {
-      queryClient.setQueryData<InfiniteData<FishingResponseT>>(
-        [QUERY_KEY.ALL_FISH],
-        prev => {
-          if (!prev) return prev;
-
-          const pages = prev?.pages.map(page => ({
-            ...page,
-
-            data: page.data.map(item =>
-              response._id === item._id ? response : item,
-            ),
-          }));
-
-          return { ...prev, pages };
-        },
-      );
-      queryClient.setQueryData<InfiniteData<FishingResponseT>>(
-        [QUERY_KEY.ALL_FISH_USER],
-        prev => {
-          if (!prev) return prev;
-
-          const pages = prev?.pages.map(page => ({
-            ...page,
-
-            data: page.data.map(item =>
-              response._id === item._id ? response : item,
-            ),
-          }));
-
-          return { ...prev, pages };
-        },
-      );
+    onSuccess() {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY.PAID],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.GET_ONE_FISHING, id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.ALL_FISH_USER],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.ALL_FISH],
       });
     },
   });
