@@ -65,12 +65,16 @@ const PaidPlace = () => {
           onChangeText={setValueTitle}
           value={valueTitle}
           search
+          borderColor={colors.SECOND}
+          ibackground
         />
         <InputField
           placeholder="Пошку по опису"
           onChangeText={setValueDescription}
           value={valueDescription}
           search
+          borderColor={colors.SECOND}
+          ibackground
         />
         {error && <Text>{error.message}</Text>}
         <FlashList

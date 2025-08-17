@@ -21,6 +21,7 @@ type BaseProps = {
   multiline?: boolean;
   search?: boolean;
   placeholderInput?: string;
+  borderColor?: string;
 };
 
 type InputFieldProps = TextInputProps & BaseProps;
@@ -38,12 +39,13 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
       secureTextEntry,
       style,
       search,
+      borderColor = colors.ACCENT,
       ...rest
     },
     ref,
   ) => {
     const dynamicStyles = {
-      backgroundColor: ibackground ? colors.SECOND : undefined,
+      backgroundColor: ibackground ? colors.SECOND20 : undefined,
       height: multiline ? heightArea : 48,
       textAlignVertical: multiline ? ('top' as const) : ('center' as const),
     };
@@ -67,6 +69,7 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
           secureTextEntry={secureTextEntry ? isHidden : false}
           multiline={multiline}
           style={[
+            { borderColor: borderColor },
             styles.input,
             dynamicStyles,
             error && styles.inputError,
@@ -111,7 +114,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: colors.ACCENT,
+    // borderColor: colors.ACCENT,
     borderRadius: 6,
     paddingHorizontal: 12,
     color: colors.TEXT,

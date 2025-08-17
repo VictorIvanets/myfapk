@@ -40,22 +40,22 @@ export const HomeTabs = () => {
         }}
       />
       <Tabs.Screen
-        name="Map"
-        component={Map}
-        options={{
-          title: 'Карта',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="map-sharp" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="Paid"
         component={PaidPlace}
         options={{
           title: 'Платники',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="wallet" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Map"
+        component={Map}
+        options={{
+          title: 'Карта',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="map-sharp" size={size} color={color} />
           ),
         }}
       />

@@ -64,6 +64,7 @@ const AddComment = ({ data, currentUser }: AddCommentProps) => {
               value={value}
               error={errors.comment ? errors.comment?.message : error?.message}
               ibackground
+              borderColor={colors.SECOND}
             />
           )}
         />
