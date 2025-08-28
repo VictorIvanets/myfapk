@@ -49,10 +49,15 @@ const Setting = () => {
             </Text>
           </Flex>
         </Flex>
-
-        <Flex rel center>
-          <Button title="вийти з додатку" onPress={() => setCheckExit(true)} />
+        <Flex center>
+          <Button
+            title="Правила"
+            onPress={() => {
+              navigation.navigate('Rules');
+            }}
+          />
         </Flex>
+
         <Flex center>
           <Button
             title="продовжити"
@@ -60,6 +65,9 @@ const Setting = () => {
               navigation.navigate('HomeTabs');
             }}
           />
+        </Flex>
+        <Flex rel center>
+          <Button title="вийти з додатку" onPress={() => setCheckExit(true)} />
         </Flex>
       </Flex>
       {checkExit && (

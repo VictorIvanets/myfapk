@@ -13,9 +13,10 @@ export type NavigationStateRoute = NavigationState['routes'][number];
 export type RootHomeTabsParamListT = {
   Home: undefined;
   Map: { coords?: LeafletViewCoordsT };
+  Posts: undefined;
   Paid: undefined;
   Advertising: undefined;
-  Rules: undefined;
+  // Rules: undefined;
 };
 
 export type RootStackParamListT = {

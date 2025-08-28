@@ -1,27 +1,27 @@
 import { ActivityIndicator, Dimensions, StyleSheet } from 'react-native';
 import Flex from 'src/components/Flex';
 import { colors } from 'src/theme/colors';
-import AllFishing from './Tabs/AllFishing';
-import UserFishing from './Tabs/UserFishing';
-import { FishingTabs } from './Tabs/types';
+import { PostsTabs } from './Tabs/types';
 import { useMemo } from 'react';
 import { SceneMap } from 'react-native-tab-view';
 import TabView from 'src/components/TabView';
 import useGetUserInfo from 'src/hooks/user/useGetUserInfo';
 import Header from 'src/features/Header/Header';
+import AllPosts from './Tabs/AllPosts';
+import UserPosts from './Tabs/UserPosts';
 const screenWidth = Dimensions.get('window').width;
 const TAB_WIDTH = screenWidth / 2 - 16;
 
-const Home = () => {
-  const userFishingTab = useMemo(() => <UserFishing />, []);
+const Posts = () => {
+  const userFishingTab = useMemo(() => <UserPosts />, []);
   const { userInfo } = useGetUserInfo();
-  const allFishingTab = useMemo(() => <AllFishing />, []);
+  const allFishingTab = useMemo(() => <AllPosts />, []);
 
   const renderScene = useMemo(
     () =>
       SceneMap({
-        [FishingTabs.USER]: () => userFishingTab,
-        [FishingTabs.ALL]: () => allFishingTab,
+        [PostsTabs.USER]: () => userFishingTab,
+        [PostsTabs.ALL]: () => allFishingTab,
       }),
     [userFishingTab, allFishingTab],
   );
@@ -46,12 +46,12 @@ const Home = () => {
         defaultTabIndex={0}
         routes={[
           {
-            key: FishingTabs.USER,
-            title: 'ВАШІ ЗАПИСИ',
+            key: PostsTabs.ALL,
+            title: 'Дошка',
           },
           {
-            key: FishingTabs.ALL,
-            title: 'ВСІ ЗАПИСИ',
+            key: PostsTabs.USER,
+            title: 'Мої записи',
           },
         ]}
         renderScene={renderScene}
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Posts;

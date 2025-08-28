@@ -1,22 +1,15 @@
-import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
-import {
-  StyleSheet,
-  ActivityIndicator,
-  RefreshControl,
-  Image,
-} from 'react-native';
+import { StyleSheet, ActivityIndicator, RefreshControl } from 'react-native';
 import Divider from 'src/components/Divider';
 import Flex from 'src/components/Flex';
 import InputField from 'src/components/InputField/InputField';
-import ScaleInPressable from 'src/components/ScaleInPressable';
 import Text from 'src/components/Text';
 import FishingCardPaid from 'src/features/FishingCard/FishingCardPaid';
-import { useAppNavigation } from 'src/hooks/useAppNavigation';
 import useGetPaid from 'src/hooks/fishing/useGetPaid';
 import useGetUserInfo from 'src/hooks/user/useGetUserInfo';
 import { colors } from 'src/theme/colors';
+import Header from 'src/features/Header/Header';
 
 const PaidPlace = () => {
   const {
@@ -34,34 +27,14 @@ const PaidPlace = () => {
     setValueDescription,
   } = useGetPaid();
   const { userInfo } = useGetUserInfo();
-  const { navigate } = useAppNavigation();
 
   return (
     <Flex flex gap="s3" style={styles.container}>
-      <Flex style={styles.header} centerH row spread>
-        <Image
-          source={require('../../../assets/images/logoMf-01.png')}
-          style={styles.image}
-        />
-        <ScaleInPressable onPress={() => navigate('Setting')}>
-          <Flex centerH row gap="s1">
-            <Flex right gap="s1">
-              <Text size="subtitlemin"> {userInfo?.name}</Text>
-              <Text size="subtitlemin"> {userInfo?.city}</Text>
-              <Text size="subtitlemin"> {userInfo?.country}</Text>
-            </Flex>
-            <MaterialIcons
-              name="account-circle"
-              size={50}
-              color={colors.ACCENT}
-            />
-          </Flex>
-        </ScaleInPressable>
-      </Flex>
+      <Header userInfo={userInfo} />
 
       <Flex flex gap="s1" style={styles.list}>
         <InputField
-          placeholderInput="Пошку по назві"
+          placeholderInput="Пошук по назві"
           onChangeText={setValueTitle}
           value={valueTitle}
           search
@@ -69,7 +42,7 @@ const PaidPlace = () => {
           ibackground
         />
         <InputField
-          placeholder="Пошку по опису"
+          placeholder="Пошук по опису"
           onChangeText={setValueDescription}
           value={valueDescription}
           search
@@ -110,17 +83,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.MAIN,
     padding: 12,
-  },
-  image: {
-    width: 160,
-    height: 60,
-    resizeMode: 'contain',
-  },
-  header: {
-    borderBottomColor: colors.SECOND,
-    borderBottomWidth: 3,
-    paddingBottom: 10,
-    borderRadius: 15,
   },
 });
 

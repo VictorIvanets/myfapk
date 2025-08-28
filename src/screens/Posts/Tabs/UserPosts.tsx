@@ -5,38 +5,28 @@ import Divider from 'src/components/Divider';
 import Flex from 'src/components/Flex';
 import InputField from 'src/components/InputField/InputField';
 import Text from 'src/components/Text';
-import FishingCard from 'src/features/FishingCard/FishingCard';
-import useGetAllByUser from 'src/hooks/fishing/useGetAllByUser';
+import PostCard from 'src/features/PostCard/PostCard';
+import useGetAllPostByUser from 'src/hooks/posts/useGetAllPostsByUser';
 import { colors } from 'src/theme/colors';
 
-const UserFishing = () => {
+const UserPosts = () => {
   const {
     isLoading,
     error,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    allItems,
+    postsByUser,
     isRefetching,
     refetchData,
-    valueTitle,
-    setValueTitle,
     valueDescription,
     setValueDescription,
-  } = useGetAllByUser();
+  } = useGetAllPostByUser();
 
   return (
     <Flex flex gap="s1" style={styles.container}>
       <InputField
-        placeholderInput="Пошук по назві"
-        onChangeText={setValueTitle}
-        value={valueTitle}
-        search
-        borderColor={colors.SECOND}
-        ibackground
-      />
-      <InputField
-        placeholder="Пошук по опису"
+        placeholder="Пошук"
         onChangeText={setValueDescription}
         value={valueDescription}
         search
@@ -61,8 +51,8 @@ const UserFishing = () => {
             <ActivityIndicator size={80} color={colors.ACCENT} />
           ) : null
         }
-        data={allItems}
-        renderItem={({ item }) => <FishingCard item={item} />}
+        data={postsByUser}
+        renderItem={({ item }) => <PostCard item={item} />}
       />
     </Flex>
   );
@@ -75,4 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserFishing;
+export default UserPosts;

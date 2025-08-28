@@ -27,7 +27,7 @@ const AllFishing = () => {
   return (
     <Flex flex gap="s1" style={styles.container}>
       <InputField
-        placeholderInput="Пошку по назві"
+        placeholderInput="Пошук по назві"
         onChangeText={setValueTitle}
         value={valueTitle}
         search
@@ -35,7 +35,7 @@ const AllFishing = () => {
         ibackground
       />
       <InputField
-        placeholder="Пошку по опису"
+        placeholder="Пошук по опису"
         onChangeText={setValueDescription}
         value={valueDescription}
         search

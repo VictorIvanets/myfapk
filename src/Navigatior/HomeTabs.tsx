@@ -4,10 +4,10 @@ import type { RootHomeTabsParamListT } from 'src/Navigatior/route';
 import Map from 'src/screens/Map/Map';
 import { colors } from 'src/theme/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Rules from 'src/screens/Rules/Rules';
 import PaidPlace from 'src/screens/PaidPlace/PaidPlace';
 import Advertising from 'src/screens/Advertising/Advertising';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
+import Posts from 'src/screens/Posts/Posts';
 
 const Tabs = createBottomTabNavigator<RootHomeTabsParamListT>();
 
@@ -50,6 +50,16 @@ export const HomeTabs = () => {
         }}
       />
       <Tabs.Screen
+        name="Posts"
+        component={Posts}
+        options={{
+          title: 'Спільнота',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="chatbubbles" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="Map"
         component={Map}
         options={{
@@ -66,16 +76,6 @@ export const HomeTabs = () => {
           title: 'Акції',
           tabBarIcon: ({ color, size }) => (
             <MaterialDesignIcons name="sale" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Rules"
-        component={Rules}
-        options={{
-          title: 'Правила',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="settings-sharp" size={size} color={color} />
           ),
         }}
       />

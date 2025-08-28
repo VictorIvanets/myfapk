@@ -5,7 +5,7 @@ import { useDebounce } from '../useDebounce';
 import { postsServices } from 'src/services/posts.services';
 import type { PostT } from 'src/types/posts.types';
 
-const useGetAllPostByUser = () => {
+const useGetAllPost = () => {
   const [valueDescription, setValueDescription] = useState<string>();
   const debounceDescription = useDebounce(valueDescription, 500);
 
@@ -50,4 +50,4 @@ const useGetAllPostByUser = () => {
   };
 };
 
-export default useGetAllPostByUser;
+export default useGetAllPost;
