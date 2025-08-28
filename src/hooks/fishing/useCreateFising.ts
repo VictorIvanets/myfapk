@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { fishingServices } from 'src/services/fishing.services';
 import { QUERY_KEY } from 'src/types/constants';
-import { useAppNavigation } from './useAppNavigation';
+import { useAppNavigation } from '../useAppNavigation';
 
 const useCreateFising = () => {
   const { navigate } = useAppNavigation();

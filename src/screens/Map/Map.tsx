@@ -5,7 +5,7 @@ import { colors } from '../../theme/colors';
 import { LeafletView } from 'react-native-leaflet-view';
 import Flex from 'src/components/Flex';
 import type { LeafletViewCoordsT } from 'src/types/map.types';
-import useGetAllforMap from 'src/hooks/useGetAllforMap';
+import useGetAllforMap from 'src/hooks/fishing/useGetAllforMap';
 import Button from 'src/components/Button';
 import {
   markerAllFishing,

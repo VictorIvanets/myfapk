@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
-import useGetOneFishing from 'src/hooks/useGetOneFishing';
+import useGetOneFishing from 'src/hooks/fishing/useGetOneFishing';
 import PhotoTab from './Tabs/PhotoTab';
 import InfoTab from './Tabs/InfoTab';
 import CommentsTab from './Tabs/CoomentsTab';
 import type { Route } from 'react-native-tab-view';
 import { SceneMap } from 'react-native-tab-view';
 import { DateilsTabs } from './Tabs/types';
-import useGetCommens from 'src/hooks/useGetComments';
+import useGetCommens from 'src/hooks/comments/useGetComments';
 
 export const useDetails = (id: string) => {
   const { data: oneFishing } = useGetOneFishing(id);

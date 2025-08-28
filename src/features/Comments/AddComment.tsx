@@ -10,7 +10,7 @@ import type { UserInfoT } from 'src/types/auth.types';
 import Flex from 'src/components/Flex';
 import { colors } from 'src/theme/colors';
 import { MaterialDesignIcons } from '@react-native-vector-icons/material-design-icons';
-import useCreateComment from 'src/hooks/useCreateComment';
+import useCreateComment from 'src/hooks/comments/useCreateComment';
 import type { CommentT } from 'src/types/comments.types';
 import ScaleInPressable from 'src/components/ScaleInPressable';
 

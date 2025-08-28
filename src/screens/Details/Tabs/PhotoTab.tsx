@@ -3,7 +3,7 @@ import { ActivityIndicator, StyleSheet } from 'react-native';
 import type { TabProps } from './types';
 import Flex from 'src/components/Flex';
 import Text from 'src/components/Text';
-import useGetPhotoInFolder from 'src/hooks/useGetPhotoInFolder';
+import useGetPhotoInFolder from 'src/hooks/photo/useGetPhotoInFolder';
 import type { ResponseGetPhoto } from 'src/types/photo.types';
 import { colors } from 'src/theme/colors';
 import useGetUserInfoInStorage from 'src/hooks/useGetUserInfoInStorage';
@@ -13,7 +13,7 @@ import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 import { handleSelectImage } from 'src/helpers/handleSelectImage';
 import { launchImageLibrary } from 'react-native-image-picker';
 import FormData from 'form-data';
-import useUploadPhoto from 'src/hooks/useUploadPhoto';
+import useUploadPhoto from 'src/hooks/photo/useUploadPhoto';
 import PhotoItem from 'src/features/PhotoItem/PhotoItem';
 
 const PhotoTab = ({ data }: TabProps) => {

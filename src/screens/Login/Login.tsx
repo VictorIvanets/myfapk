@@ -6,7 +6,7 @@ import Button from 'src/components/Button';
 import Flex from 'src/components/Flex';
 import Text from 'src/components/Text';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';
-import useLogIn from 'src/hooks/useLogIn';
+import useLogIn from 'src/hooks/user/useLogIn';
 import type { UserLogInDataFields } from './userLogInSchema';
 import { userLogInSchema } from './userLogInSchema';
 import type { LoginPayloadT } from 'src/types/auth.types';

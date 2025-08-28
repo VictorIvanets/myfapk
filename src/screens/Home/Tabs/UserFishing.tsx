@@ -6,7 +6,7 @@ import Flex from 'src/components/Flex';
 import InputField from 'src/components/InputField/InputField';
 import Text from 'src/components/Text';
 import FishingCard from 'src/features/FishingCard/FishingCard';
-import useGetAllByUser from 'src/hooks/useGetAllByUser';
+import useGetAllByUser from 'src/hooks/fishing/useGetAllByUser';
 import { colors } from 'src/theme/colors';
 
 const UserFishing = () => {

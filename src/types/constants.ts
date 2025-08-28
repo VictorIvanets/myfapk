@@ -9,4 +9,12 @@ export const QUERY_KEY = {
   GET_COMMENTS: 'get_comments',
   CREATE_COMMENTS: 'create_comments',
   DELETE_COMMENTS: 'delete_comments',
+  POST_GET_ALL_BY_USER: 'post_get_all_by_user',
+  POST_GET_ALL: 'post_get_all',
+  POST_GET_ONE: 'post_get_one',
+  POST_CREATE: 'post_create',
+  POST_DELETE: 'post_delete',
+  POST_COMMENTS_GET_ALL_BY_POST: 'comment_post_get_all_by_post',
+  POST_COMMENTS_CREATE: 'comment_post_create',
+  POST_COMMENTS_DELETE: 'comment_post_delete',
 };

@@ -3,7 +3,7 @@ import { STORAGE_KEYS_ACCESS_TOKEN } from 'src/api/PREFIX';
 import { saveState } from 'src/api/storage';
 import { loginServices } from 'src/services/Login.services';
 import type { LoginPayloadT } from 'src/types/auth.types';
-import { useAppNavigation } from './useAppNavigation';
+import { useAppNavigation } from '../useAppNavigation';
 import { Alert } from 'react-native';
 
 const useLogIn = () => {

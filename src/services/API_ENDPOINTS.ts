@@ -25,5 +25,17 @@ export const API_ENDPOINTS = {
     DELETE_ONE: 'comment/',
     DELETE_BY_SETID: 'comment/set/',
   },
+  POSTS: {
+    CREATE: 'posts/create',
+    GET_ALL_BY_USER: 'posts/user',
+    GET_ALL: 'posts/all',
+    GET_ONE_BY_ID: 'posts/onepost/',
+    DELETE_ONE: 'posts/',
+  },
+  COMMENTS_POSTS: {
+    CREATE: 'postcomment/create',
+    GET_ALL_BY_POST_ID: 'postcomment/',
+    DELETE_ONE: 'postcomment/delete',
+  },
   CHECK: 'auth/check',
 } as const;

@@ -14,8 +14,8 @@ import ScaleInPressable from 'src/components/ScaleInPressable';
 import Text from 'src/components/Text';
 import FishingCardPaid from 'src/features/FishingCard/FishingCardPaid';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';
-import useGetPaid from 'src/hooks/useGetPaid';
-import useGetUserInfo from 'src/hooks/useGetUserInfo';
+import useGetPaid from 'src/hooks/fishing/useGetPaid';
+import useGetUserInfo from 'src/hooks/user/useGetUserInfo';
 import { colors } from 'src/theme/colors';
 
 const PaidPlace = () => {

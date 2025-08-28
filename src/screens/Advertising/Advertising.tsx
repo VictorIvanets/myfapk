@@ -6,7 +6,7 @@ import Flex from 'src/components/Flex';
 import ScaleInPressable from 'src/components/ScaleInPressable';
 import Text from 'src/components/Text';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';
-import useGetUserInfo from 'src/hooks/useGetUserInfo';
+import useGetUserInfo from 'src/hooks/user/useGetUserInfo';
 import { colors } from 'src/theme/colors';
 
 const Advertising = () => {

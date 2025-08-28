@@ -7,7 +7,7 @@ import Text from 'src/components/Text';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';
 import { colors } from 'src/theme/colors';
 import type { OneFishingT } from 'src/types/fishing';
-import useDeleteFising from 'src/hooks/useDeleteFising';
+import useDeleteFising from 'src/hooks/fishing/useDeleteFising';
 import useGetUserInfoInStorage from 'src/hooks/useGetUserInfoInStorage';
 import Button from 'src/components/Button';
 export const DEFAULT_IMG =

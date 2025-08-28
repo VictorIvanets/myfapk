@@ -8,7 +8,7 @@ import { useMemo } from 'react';
 import { SceneMap } from 'react-native-tab-view';
 import TabView from 'src/components/TabView';
 import Text from 'src/components/Text';
-import useGetUserInfo from 'src/hooks/useGetUserInfo';
+import useGetUserInfo from 'src/hooks/user/useGetUserInfo';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import ScaleInPressable from 'src/components/ScaleInPressable';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';

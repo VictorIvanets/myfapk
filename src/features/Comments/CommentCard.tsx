@@ -5,7 +5,7 @@ import Flex from 'src/components/Flex';
 import ScaleInPressable from 'src/components/ScaleInPressable';
 import Text from 'src/components/Text';
 import normalizeMongoDate from 'src/helpers/normalizeMongoDate';
-import useDeleteComment from 'src/hooks/useDeleteComment';
+import useDeleteComment from 'src/hooks/comments/useDeleteComment';
 import { colors } from 'src/theme/colors';
 import type { CommentResponseT } from 'src/types/comments.types';
 

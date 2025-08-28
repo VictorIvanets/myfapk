@@ -11,7 +11,7 @@ import type { UserRegisterDataFields } from './userRegisterSchema';
 import { userRegisterSchema } from './userRegisterSchema';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import useRegisterUser from 'src/hooks/useRegisterUser';
+import useRegisterUser from 'src/hooks/user/useRegisterUser';
 import type { RegisterPayloadT } from 'src/types/auth.types';
 import Button from 'src/components/Button';
 import InputField from 'src/components/InputField/InputField';

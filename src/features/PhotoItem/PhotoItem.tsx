@@ -4,7 +4,7 @@ import { colors } from 'src/theme/colors';
 import { PREFIX_STATIC } from 'src/api/PREFIX';
 import type { ResponseGetPhoto } from 'src/types/photo.types';
 import type { OneFishingT } from 'src/types/fishing';
-import useDeletePhoto from 'src/hooks/useDeletePhoto';
+import useDeletePhoto from 'src/hooks/photo/useDeletePhoto';
 import useGetUserInfoInStorage from 'src/hooks/useGetUserInfoInStorage';
 import ScaleInPressable from 'src/components/ScaleInPressable';
 import Flex from 'src/components/Flex';

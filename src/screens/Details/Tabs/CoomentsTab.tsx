@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import type { TabCommentProps } from './types';
 import Flex from 'src/components/Flex';
 import Comments from 'src/features/Comments/Comments';
-import useGetUserInfo from 'src/hooks/useGetUserInfo';
+import useGetUserInfo from 'src/hooks/user/useGetUserInfo';
 import AddComment from 'src/features/Comments/AddComment';
 
 const CommentsTab = ({

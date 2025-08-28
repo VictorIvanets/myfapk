@@ -1,14 +1,12 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useState } from 'react';
-import { fishingServices } from 'src/services/fishing.services';
 import { QUERY_KEY } from 'src/types/constants';
-import type { OneFishingT } from 'src/types/fishing';
-import { useDebounce } from './useDebounce';
+import { useState } from 'react';
+import { useDebounce } from '../useDebounce';
+import { postsServices } from 'src/services/posts.services';
+import type { PostT } from 'src/types/posts.types';
 
-const useGetAll = () => {
-  const [valueTitle, setValueTitle] = useState<string>();
+const useGetAllPostByUser = () => {
   const [valueDescription, setValueDescription] = useState<string>();
-  const debounceTitle = useDebounce(valueTitle, 500);
   const debounceDescription = useDebounce(valueDescription, 500);
 
   const {
@@ -22,21 +20,20 @@ const useGetAll = () => {
     isRefetching,
     refetch,
   } = useInfiniteQuery({
-    queryKey: [QUERY_KEY.ALL_FISH, debounceTitle, debounceDescription],
+    queryKey: [QUERY_KEY.POST_GET_ALL, debounceDescription],
     queryFn: ({ pageParam }) =>
-      fishingServices.getAll(
+      postsServices.getAll(
         pageParam as string | undefined,
-        debounceTitle,
         debounceDescription,
       ),
     getNextPageParam: (lastPage: {
-      data: OneFishingT[];
+      data: PostT[];
       nextCursor: string | null;
     }) => lastPage.nextCursor ?? undefined,
     initialPageParam: undefined,
   });
 
-  const allItems = data?.pages.flatMap(page => page.data) || [];
+  const posts = data?.pages.flatMap(page => page.data) || [];
 
   return {
     isLoading,
@@ -45,14 +42,12 @@ const useGetAll = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    allItems,
+    posts,
     isRefetching,
     refetchData: refetch,
-    valueTitle,
-    setValueTitle,
     valueDescription,
     setValueDescription,
   };
 };
 
-export default useGetAll;
+export default useGetAllPostByUser;
