@@ -8,8 +8,8 @@ import { useAppNavigation } from 'src/hooks/useAppNavigation';
 import { colors } from 'src/theme/colors';
 import type { OneFishingT } from 'src/types/fishing';
 import useDeleteFising from 'src/hooks/fishing/useDeleteFising';
-import useGetUserInfoInStorage from 'src/hooks/useGetUserInfoInStorage';
 import Button from 'src/components/Button';
+import useCheckAccess from 'src/helpers/useCheckAccess';
 export const DEFAULT_IMG =
   'https://ukrainianfishing.com.ua/wp-content/uploads/2024/10/yak-vibrati-mistse-dlya-ribalki-na-koropa.jpg';
 
@@ -22,12 +22,12 @@ const FishingCardPaid = ({ item }: FishingCardProps) => {
   const IMG = `${PREFIX_STATIC}static/${item.img[0]?.url}`;
   const [deleteItem, setDeleteItem] = useState(false);
   const { deleteFising } = useDeleteFising();
-  const user = useGetUserInfoInStorage();
+  const access = useCheckAccess(item?.userId);
 
   return (
     <ScaleInPressable
       disabled={deleteItem}
-      onLongPress={() => user?._id === item?.userId && setDeleteItem(true)}
+      onLongPress={() => access && setDeleteItem(true)}
       onPress={() => navigation.navigate('Details', { id: item._id })}
     >
       <Flex rel center flex style={styles.item}>

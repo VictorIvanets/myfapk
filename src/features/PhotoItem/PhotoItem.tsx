@@ -5,11 +5,11 @@ import { PREFIX_STATIC } from 'src/api/PREFIX';
 import type { ResponseGetPhoto } from 'src/types/photo.types';
 import type { OneFishingT } from 'src/types/fishing';
 import useDeletePhoto from 'src/hooks/photo/useDeletePhoto';
-import useGetUserInfoInStorage from 'src/hooks/useGetUserInfoInStorage';
 import ScaleInPressable from 'src/components/ScaleInPressable';
 import Flex from 'src/components/Flex';
 import Button from 'src/components/Button';
 import Text from 'src/components/Text';
+import useCheckAccess from 'src/helpers/useCheckAccess';
 
 type Props = {
   data: OneFishingT;
@@ -19,12 +19,12 @@ type Props = {
 const PhotoItem = ({ item, data }: Props) => {
   const [deleteItem, setDeleteItem] = useState(false);
   const { deletePhoto } = useDeletePhoto(data._id);
-  const user = useGetUserInfoInStorage();
+  const access = useCheckAccess(data?.userId);
 
   return (
     <ScaleInPressable
       disabled={deleteItem}
-      onLongPress={() => user?._id === data?.userId && setDeleteItem(true)}
+      onLongPress={() => access && setDeleteItem(true)}
       style={styles.imagebox}
     >
       <Image

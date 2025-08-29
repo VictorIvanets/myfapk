@@ -22,6 +22,7 @@ const AllPosts = () => {
     valueDescription,
     setValueDescription,
   } = useGetAllPost();
+
   return (
     <Flex flex gap="s1" style={styles.container}>
       <InputField

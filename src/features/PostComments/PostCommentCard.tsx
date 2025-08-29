@@ -6,17 +6,17 @@ import ScaleInPressable from 'src/components/ScaleInPressable';
 import Text from 'src/components/Text';
 import useCheckAccess from 'src/helpers/useCheckAccess';
 import normalizeMongoDate from 'src/helpers/normalizeMongoDate';
-import useDeleteComment from 'src/hooks/comments/useDeleteComment';
 import { colors } from 'src/theme/colors';
-import type { CommentResponseT } from 'src/types/comments.types';
+import type { CommentPostT } from 'src/types/posts.types';
+import useDeletePostComment from 'src/hooks/comment_post/useDeletePostComment';
 
 interface CardProps {
-  item: CommentResponseT;
-  currentUserId: string;
+  item: CommentPostT;
+  postId: string;
 }
-const CommentCard = ({ item }: CardProps) => {
+const PostCommentCard = ({ item, postId }: CardProps) => {
   const [deleteItem, setDeleteItem] = useState(false);
-  const { deleteComment } = useDeleteComment(item.setId);
+  const { deleteComment } = useDeletePostComment(item.postId);
   const access = useCheckAccess(item.useId);
 
   const delComment = () => {
@@ -35,10 +35,9 @@ const CommentCard = ({ item }: CardProps) => {
         <Text>{item.comment}</Text>
 
         <Flex abs style={styles.date}>
-          <Text size="caption">{normalizeMongoDate(item.createdAt)}</Text>
-        </Flex>
-        <Flex abs style={styles.login}>
-          <Text>{item.login}</Text>
+          <Text size="subtitler">
+            {item.login}, {normalizeMongoDate(item.createdAt)}
+          </Text>
         </Flex>
       </Flex>
       {deleteItem && (
@@ -46,7 +45,7 @@ const CommentCard = ({ item }: CardProps) => {
           <Text>Ви дійсно хочете видалити коментар?</Text>
           <Flex center gap="s10" row>
             <Button
-              onPress={() => deleteComment(item._id)}
+              onPress={() => deleteComment({ commentId: item._id, postId })}
               view="small"
               title="ТАК"
             />
@@ -69,28 +68,19 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     backgroundColor: colors.BLUE,
-    marginBottom: 20,
+    marginBottom: 10,
     marginTop: 10,
-    borderRadius: 15,
+    borderRadius: 5,
     width: 'auto',
   },
   date: {
-    bottom: -10,
+    bottom: -15,
     right: 5,
     width: 'auto',
     padding: 3,
     paddingHorizontal: 7,
     backgroundColor: colors.SECOND,
-    borderRadius: 10,
-  },
-  login: {
-    top: -10,
-    left: 10,
-    width: 'auto',
-    padding: 1,
-    paddingHorizontal: 7,
-    backgroundColor: colors.SECOND,
-    borderRadius: 10,
+    borderRadius: 3,
   },
   delete: {
     width: '100%',
@@ -103,4 +93,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CommentCard;
+export default PostCommentCard;

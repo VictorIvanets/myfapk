@@ -1,3 +1,5 @@
+import type { ColorsKey } from 'src/features/PostCard/colorSchemaCard';
+
 export type PostsResponseT = {
   data: PostT[];
   nextCursor: string | null;
@@ -7,14 +9,14 @@ export type PostT = {
   userLogin: string;
   userId: string;
   description: string;
-  colorSchema: string;
+  colorSchema: ColorsKey;
   commentCount: number;
   createdAt: string;
 };
 
 export type PostPayloadT = {
   description: string;
-  colorSchema: string;
+  colorSchema: ColorsKey;
 };
 
 export type CommentPostPayloadT = {

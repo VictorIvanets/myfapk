@@ -34,5 +34,6 @@ export const colors = {
 } as const;
 
 export type ColorT = keyof typeof colors;
+export type ValueColorT = (typeof colors)[keyof typeof colors];
 
 export const BORDER = { BIG: 30, SMALL: 7 } as const;

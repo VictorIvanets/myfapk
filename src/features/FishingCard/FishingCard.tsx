@@ -9,8 +9,8 @@ import { useAppNavigation } from 'src/hooks/useAppNavigation';
 import { colors } from 'src/theme/colors';
 import type { OneFishingT } from 'src/types/fishing';
 import useDeleteFising from 'src/hooks/fishing/useDeleteFising';
-import useGetUserInfoInStorage from 'src/hooks/useGetUserInfoInStorage';
 import Button from 'src/components/Button';
+import useCheckAccess from 'src/helpers/useCheckAccess';
 export const DEFAULT_IMG =
   'https://kartinkof.club/uploads/posts/2022-05/1652635208_1-kartinkof-club-p-kartinki-subbota-ribalka-1.jpg';
 
@@ -24,12 +24,12 @@ const FishingCard = ({ item }: FishingCardProps) => {
   const dateNormalize = item.date.slice(0, 10).split('-').reverse().join('-');
   const [deleteItem, setDeleteItem] = useState(false);
   const { deleteFising } = useDeleteFising();
-  const user = useGetUserInfoInStorage();
+  const access = useCheckAccess(item?.userId);
 
   return (
     <ScaleInPressable
       disabled={deleteItem}
-      onLongPress={() => user?._id === item?.userId && setDeleteItem(true)}
+      onLongPress={() => access && setDeleteItem(true)}
       onPress={() => navigation.navigate('Details', { id: item._id })}
     >
       <Flex rel center flex style={styles.item}>

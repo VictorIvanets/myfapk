@@ -2,17 +2,22 @@ import { ActivityIndicator, Dimensions, StyleSheet } from 'react-native';
 import Flex from 'src/components/Flex';
 import { colors } from 'src/theme/colors';
 import { PostsTabs } from './Tabs/types';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { SceneMap } from 'react-native-tab-view';
 import TabView from 'src/components/TabView';
 import useGetUserInfo from 'src/hooks/user/useGetUserInfo';
 import Header from 'src/features/Header/Header';
 import AllPosts from './Tabs/AllPosts';
 import UserPosts from './Tabs/UserPosts';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import ScaleInPressable from 'src/components/ScaleInPressable';
+import AddPost from 'src/features/AddPost/AddPost';
+
 const screenWidth = Dimensions.get('window').width;
 const TAB_WIDTH = screenWidth / 2 - 16;
 
 const Posts = () => {
+  const [addView, setAddView] = useState(false);
   const userFishingTab = useMemo(() => <UserPosts />, []);
   const { userInfo } = useGetUserInfo();
   const allFishingTab = useMemo(() => <AllPosts />, []);
@@ -27,7 +32,7 @@ const Posts = () => {
   );
 
   return (
-    <Flex flex gap="s3" style={styles.container}>
+    <Flex rel flex gap="s3" style={styles.container}>
       <Header userInfo={userInfo} />
       <TabView
         tabStyle={styles.tabStyle}
@@ -56,6 +61,18 @@ const Posts = () => {
         ]}
         renderScene={renderScene}
       />
+      <ScaleInPressable onPress={() => setAddView(!addView)} style={styles.add}>
+        {addView ? (
+          <MaterialIcons
+            name="close-fullscreen"
+            size={60}
+            color={colors.ACCENT}
+          />
+        ) : (
+          <MaterialIcons name="post-add" size={60} color={colors.ACCENT} />
+        )}
+      </ScaleInPressable>
+      {addView && <AddPost onClose={setAddView} />}
     </Flex>
   );
 };
@@ -76,6 +93,12 @@ const styles = StyleSheet.create({
   },
   label: {
     color: colors.RED,
+  },
+  add: {
+    position: 'absolute',
+    bottom: '0.5%',
+    right: '1%',
+    zIndex: 25,
   },
 });
 

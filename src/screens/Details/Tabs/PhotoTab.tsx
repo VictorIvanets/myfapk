@@ -6,7 +6,6 @@ import Text from 'src/components/Text';
 import useGetPhotoInFolder from 'src/hooks/photo/useGetPhotoInFolder';
 import type { ResponseGetPhoto } from 'src/types/photo.types';
 import { colors } from 'src/theme/colors';
-import useGetUserInfoInStorage from 'src/hooks/useGetUserInfoInStorage';
 import { ScrollView } from 'react-native-gesture-handler';
 import ScaleInPressable from 'src/components/ScaleInPressable';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
@@ -15,15 +14,16 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import FormData from 'form-data';
 import useUploadPhoto from 'src/hooks/photo/useUploadPhoto';
 import PhotoItem from 'src/features/PhotoItem/PhotoItem';
+import useCheckAccess from 'src/helpers/useCheckAccess';
 
 const PhotoTab = ({ data }: TabProps) => {
-  const user = useGetUserInfoInStorage();
   const [timeruploadPhoto, setTimerUploadPhoto] = useState<
     ResponseGetPhoto[] | undefined
   >();
   const { photoData, isLoadingPhoto } = useGetPhotoInFolder(data?._id);
   const { uploadPhoto } = useUploadPhoto(data?._id || '');
   const [errorUpload, setErrorUpload] = useState<string | null>(null);
+  const access = useCheckAccess(data?.userId);
 
   useEffect(() => {
     setTimeout(() => {
@@ -56,7 +56,7 @@ const PhotoTab = ({ data }: TabProps) => {
         <ActivityIndicator size={150} color={colors.ACCENT} />
       ) : (
         <Flex center flex>
-          {user?._id === data?.userId ? (
+          {access ? (
             <ScaleInPressable onPress={takeImageFromGallery}>
               <Flex center>
                 <Text center color="TEXTDARK">
@@ -75,7 +75,7 @@ const PhotoTab = ({ data }: TabProps) => {
           )}
         </Flex>
       )}
-      {user?._id === data?.userId && (
+      {access && (
         <ScaleInPressable
           onPress={takeImageFromGallery}
           style={styles.addphoto}

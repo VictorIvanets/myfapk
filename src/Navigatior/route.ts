@@ -28,6 +28,7 @@ export type RootStackParamListT = {
   Login: undefined;
   Splash: undefined;
   Details: { id: string };
+  PostDetails: { id: string };
   Registration: undefined;
   CreateFishing: { coords?: LeafletViewCoordsT; updata?: OneFishingT };
   Setting: undefined;

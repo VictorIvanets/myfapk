@@ -10,6 +10,7 @@ import { HomeTabs } from './HomeTabs';
 import Setting from 'src/screens/Setting/Setting';
 import Rules from 'src/screens/Rules/Rules';
 import Map from 'src/screens/Map/Map';
+import PostDetails from 'src/screens/PostDetails/PostDetails';
 
 const Stack = createStackNavigator<RootStackParamListT>();
 
@@ -33,6 +34,7 @@ const Navigator = (): React.JSX.Element => {
       <Stack.Screen name="Rules" component={Rules} />
       <Stack.Screen name="CreateFishing" component={CreateFishing} />
       <Stack.Screen name="Map" component={Map} />
+      <Stack.Screen name="PostDetails" component={PostDetails} />
     </Stack.Navigator>
   );
 };
