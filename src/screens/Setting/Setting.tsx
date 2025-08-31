@@ -1,6 +1,6 @@
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import MaterialDIcons from '@react-native-vector-icons/material-design-icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Linking, StyleSheet } from 'react-native';
 import { STORAGE_KEYS_ACCESS_TOKEN } from 'src/api/PREFIX';
 import { clearState } from 'src/api/storage';
@@ -13,11 +13,37 @@ import normalizeMongoDate from 'src/helpers/normalizeMongoDate';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';
 import useGetUserInfo from 'src/hooks/user/useGetUserInfo';
 import { colors } from 'src/theme/colors';
+import Weather from 'src/features/Weather/Weather';
+import type { WeatherT } from 'src/types/weather.types';
+import { getWeatherApi } from 'src/services/getWeather';
+import type { LeafletViewCoordsT } from 'src/types/map.types';
+import { requestLocationPermission } from '../Map/requestLocationPermission';
 
 const Setting = () => {
   const navigation = useAppNavigation();
   const { userInfo } = useGetUserInfo();
   const [checkExit, setCheckExit] = useState(false);
+  const [weather, setWeather] = useState<WeatherT | undefined>();
+  const [location, setLocation] = useState<LeafletViewCoordsT | null>(null);
+
+  const getWeather = async () => {
+    if (location) {
+      const result = await getWeatherApi({
+        lat: location.lat,
+        lng: location.lng,
+      });
+      setWeather(result);
+    }
+  };
+
+  useEffect(() => {
+    requestLocationPermission(setLocation);
+  }, []);
+
+  useEffect(() => {
+    location && getWeather();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   const exit = () => {
     clearState(STORAGE_KEYS_ACCESS_TOKEN);
@@ -110,6 +136,7 @@ const Setting = () => {
               <Text>Веб-версія</Text>
             </Flex>
           </ScaleInPressable>
+          <Weather warn data={weather} />
         </Flex>
       </Flex>
       {checkExit && (

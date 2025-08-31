@@ -12,6 +12,7 @@ import UserPosts from './Tabs/UserPosts';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ScaleInPressable from 'src/components/ScaleInPressable';
 import AddPost from 'src/features/AddPost/AddPost';
+import DraggableAddButton from 'src/components/DraggableAddButton/DraggableAddButton';
 
 const screenWidth = Dimensions.get('window').width;
 const TAB_WIDTH = screenWidth / 2 - 16;
@@ -61,7 +62,7 @@ const Posts = () => {
         ]}
         renderScene={renderScene}
       />
-      <ScaleInPressable onPress={() => setAddView(!addView)} style={styles.add}>
+      {/* <ScaleInPressable onPress={() => setAddView(!addView)} style={styles.add}>
         {addView ? (
           <MaterialIcons
             name="close-fullscreen"
@@ -69,9 +70,25 @@ const Posts = () => {
             color={colors.ACCENT}
           />
         ) : (
-          <MaterialIcons name="post-add" size={60} color={colors.ACCENT} />
+          <Flex center style={styles.addbox}>
+            <MaterialIcons name="post-add" size={40} color={colors.WHITE} />
+          </Flex>
         )}
-      </ScaleInPressable>
+      </ScaleInPressable> */}
+      {addView ? (
+        <ScaleInPressable
+          onPress={() => setAddView(!addView)}
+          style={styles.add}
+        >
+          <MaterialIcons
+            name="close-fullscreen"
+            size={60}
+            color={colors.ACCENT}
+          />
+        </ScaleInPressable>
+      ) : (
+        <DraggableAddButton setAddView={setAddView} addView={addView} />
+      )}
       {addView && <AddPost onClose={setAddView} />}
     </Flex>
   );
@@ -100,6 +117,12 @@ const styles = StyleSheet.create({
     right: '1%',
     zIndex: 25,
   },
+  // addbox: {
+  //   backgroundColor: colors.ACCENT,
+  //   borderRadius: '50%',
+  //   padding: 10,
+  //   transform: [{ translateY: -45 }],
+  // },
 });
 
 export default Posts;

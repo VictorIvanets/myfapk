@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     backgroundColor: colors.BLUE,
-    marginBottom: 10,
+    marginBottom: 15,
     marginTop: 10,
     borderRadius: 5,
     width: 'auto',
