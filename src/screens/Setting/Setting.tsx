@@ -1,10 +1,13 @@
+import MaterialIcons from '@react-native-vector-icons/material-icons';
+import MaterialDIcons from '@react-native-vector-icons/material-design-icons';
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { Linking, StyleSheet } from 'react-native';
 import { STORAGE_KEYS_ACCESS_TOKEN } from 'src/api/PREFIX';
 import { clearState } from 'src/api/storage';
 import Button from 'src/components/Button';
 import FadeInView from 'src/components/FadeInView';
 import Flex from 'src/components/Flex';
+import ScaleInPressable from 'src/components/ScaleInPressable';
 import Text from 'src/components/Text';
 import normalizeMongoDate from 'src/helpers/normalizeMongoDate';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';
@@ -23,51 +26,90 @@ const Setting = () => {
 
   return (
     <FadeInView style={styles.container}>
-      <Flex centerH flex spread gap="s10" style={styles.container}>
-        <Flex gap="s8">
+      <Flex flex gap="s10" style={styles.container}>
+        <Flex style={styles.account} gap="s8">
           <Flex centerH>
-            <Text size="h4">Інформація про користувача</Text>
-          </Flex>
-          <Flex>
-            <Text size="headline" color="ACCENT">
-              Ім'я:
+            <Text color="ACCENT" size="Bheadline">
+              Інформація про користувача
             </Text>
-            <Text size="headline">{userInfo?.name}</Text>
-            <Text color="ACCENT">Прізвище:</Text>
-            <Text size="headline">{userInfo?.subname}</Text>
-            <Text color="ACCENT">Логін:</Text>
-            <Text size="headline">{userInfo?.login}</Text>
-            <Text color="ACCENT">Місто:</Text>
-            <Text size="headline">{userInfo?.city}</Text>
-            <Text color="ACCENT">Країна:</Text>
-            <Text size="headline">{userInfo?.country}</Text>
           </Flex>
-          <Flex>
-            <Text color="ACCENT">Дата реєстрації:</Text>
-            <Text size="caption">
-              {normalizeMongoDate(userInfo?.createdAt || '')}
+          <Flex gap="s1">
+            <MaterialIcons
+              name="account-circle"
+              size={30}
+              color={colors.WHITE}
+            />
+            <Text>Логін: {userInfo?.login}</Text>
+            <Text>Ім'я: {userInfo?.name}</Text>
+            <Text>Прізвище: {userInfo?.subname}</Text>
+            <Text>Місто: {userInfo?.city}</Text>
+            <Text>Країна: {userInfo?.country}</Text>
+            <Text color="ACCENT">
+              Дата реєстрації: {normalizeMongoDate(userInfo?.createdAt || '')}
             </Text>
           </Flex>
         </Flex>
-        <Flex center>
-          <Button
-            title="Правила"
+        <Flex gap="s5">
+          <ScaleInPressable
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <Flex row centerH gap="s2">
+              <MaterialIcons
+                name="exit-to-app"
+                size={30}
+                color={colors.WHITE}
+              />
+              <Text>Повернутись назад</Text>
+            </Flex>
+          </ScaleInPressable>
+          <ScaleInPressable
             onPress={() => {
               navigation.navigate('Rules');
             }}
-          />
-        </Flex>
-
-        <Flex center>
-          <Button
-            title="продовжити"
-            onPress={() => {
-              navigation.navigate('HomeTabs');
-            }}
-          />
-        </Flex>
-        <Flex rel center>
-          <Button title="вийти з додатку" onPress={() => setCheckExit(true)} />
+          >
+            <Flex row centerH gap="s2">
+              <MaterialIcons
+                name="info-outline"
+                size={30}
+                color={colors.WHITE}
+              />
+              <Text>Правила</Text>
+            </Flex>
+          </ScaleInPressable>
+          <ScaleInPressable onPress={() => setCheckExit(true)}>
+            <Flex row centerH gap="s2">
+              <MaterialDIcons
+                name="location-exit"
+                size={30}
+                color={colors.WHITE}
+              />
+              <Text>Вийти з додатка</Text>
+            </Flex>
+          </ScaleInPressable>
+          <ScaleInPressable
+            onPress={() => Linking.openURL('mailto:imperia.zt@gmail.com')}
+          >
+            <Flex row centerH gap="s2">
+              <MaterialDIcons
+                name="email-arrow-right-outline"
+                size={30}
+                color={colors.WHITE}
+              />
+              <Text>Написати адміністратору</Text>
+            </Flex>
+          </ScaleInPressable>
+          <ScaleInPressable
+            onPress={() =>
+              Linking.openURL('https://victorivanets.github.io/myfapp')
+            }
+          >
+            <Flex row centerH gap="s2">
+              <MaterialDIcons name="web" size={30} color={colors.WHITE} />
+              <Text>Веб-версія</Text>
+            </Flex>
+          </ScaleInPressable>
         </Flex>
       </Flex>
       {checkExit && (
@@ -99,6 +141,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     position: 'relative',
+  },
+  account: {
+    borderBottomColor: colors.SECOND,
+    borderBottomWidth: 2,
+    paddingBottom: 25,
   },
   exit: {
     zIndex: 100,

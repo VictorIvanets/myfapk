@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamListT } from 'src/Navigatior/route';
@@ -10,12 +10,16 @@ import type { LoginResponseT } from 'src/types/auth.types';
 import { enterServices } from 'src/services/enter.services';
 import Flex from 'src/components/Flex';
 import Text from 'src/components/Text';
+import ScaleInPressable from 'src/components/ScaleInPressable';
+import { useAppNavigation } from 'src/hooks/useAppNavigation';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 
 type NavigationT = StackNavigationProp<RootStackParamListT>;
 
 const Splash = () => {
   const navigation = useNavigation<NavigationT>();
   const [sever, setServer] = useState<string>();
+  const { navigate } = useAppNavigation();
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -59,8 +63,19 @@ const Splash = () => {
 
   return (
     <Flex flex center style={styles.container}>
-      <ActivityIndicator size={150} color={colors.ACCENT} />
-      <Text>Server not available yet. Please wait</Text>
+      <Image
+        source={require('../../../assets/images/logoMf-01.png')}
+        style={styles.image}
+      />
+      <Flex>
+        <ActivityIndicator size={100} color={colors.ACCENT} />
+        <Text>Server not available yet. Please wait</Text>
+      </Flex>
+      <Flex>
+        <ScaleInPressable onPress={() => navigate('Rules')}>
+          <MaterialIcons name="info-outline" size={50} color={colors.ACCENT} />
+        </ScaleInPressable>
+      </Flex>
     </Flex>
   );
 };
@@ -71,7 +86,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.MAIN,
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
+  },
+  image: {
+    width: 220,
+    height: 110,
+    resizeMode: 'contain',
   },
 });

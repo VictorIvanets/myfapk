@@ -23,7 +23,7 @@ const Text = ({
 
   return (
     <RNText
-      style={[style, s.textCenter, typography[size], { color: colors[color] }]}
+      style={[s.textCenter, typography[size], { color: colors[color] }, style]}
       {...props}
     />
   );
