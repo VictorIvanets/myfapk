@@ -47,8 +47,9 @@ const ResizableImage = ({ uri, style = styles.image }: Props) => {
     })
     .onUpdate(e => {
       if (scale.value > 1) {
-        translateX.value = savedTranslateX.value + e.translationX;
-        translateY.value = savedTranslateY.value + e.translationY;
+        const factor = Math.max(1 / scale.value, 0.2);
+        translateX.value = savedTranslateX.value + e.translationX * factor;
+        translateY.value = savedTranslateY.value + e.translationY * factor;
       }
     })
     .onEnd(() => {
@@ -58,7 +59,7 @@ const ResizableImage = ({ uri, style = styles.image }: Props) => {
       }
     });
 
-  const composed = Gesture.Simultaneous(pinch, pan);
+  const composed = Gesture.Simultaneous(pan, pinch);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
@@ -81,8 +82,9 @@ const ResizableImage = ({ uri, style = styles.image }: Props) => {
 
 const styles = StyleSheet.create({
   image: {
-    width: '100%',
-    height: '100%',
+    width: 500,
+    height: 900,
+    resizeMode: 'contain',
   },
 });
 

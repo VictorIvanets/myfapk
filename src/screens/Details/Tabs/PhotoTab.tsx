@@ -24,6 +24,7 @@ const PhotoTab = ({ data }: TabProps) => {
   const { uploadPhoto } = useUploadPhoto(data?._id || '');
   const [errorUpload, setErrorUpload] = useState<string | null>(null);
   const access = useCheckAccess(data?.userId);
+  const [scrollEnabled, setScrollEnabled] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
@@ -47,9 +48,17 @@ const PhotoTab = ({ data }: TabProps) => {
   return (
     <Flex rel style={styles.container}>
       {timeruploadPhoto?.length && data ? (
-        <ScrollView contentContainerStyle={styles.photoboxContentContainer}>
+        <ScrollView
+          scrollEnabled={scrollEnabled}
+          contentContainerStyle={styles.photoboxContentContainer}
+        >
           {timeruploadPhoto.map(item => (
-            <PhotoItem key={item._id} item={item} data={data} />
+            <PhotoItem
+              setScrollEnabled={setScrollEnabled}
+              key={item._id}
+              item={item}
+              data={data}
+            />
           ))}
         </ScrollView>
       ) : isLoadingPhoto ? (
@@ -110,6 +119,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
+    paddingBottom: 120,
   },
   addphoto: {
     position: 'absolute',

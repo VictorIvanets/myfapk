@@ -14,9 +14,10 @@ import ResizableImage from './ResizebleImage';
 type Props = {
   data: OneFishingT;
   item: ResponseGetPhoto;
+  setScrollEnabled: (val: boolean) => void;
 };
 
-const PhotoItem = ({ item, data }: Props) => {
+const PhotoItem = ({ item, data, setScrollEnabled }: Props) => {
   const [deleteItem, setDeleteItem] = useState(false);
   const [resizeImg, setResizeImg] = useState(false);
   const { deletePhoto } = useDeletePhoto(data._id);
@@ -24,10 +25,14 @@ const PhotoItem = ({ item, data }: Props) => {
 
   return (
     <Pressable
-      onPress={() => setResizeImg(!resizeImg)}
+      onPress={() => {
+        setScrollEnabled(resizeImg);
+        setResizeImg(!resizeImg);
+      }}
       disabled={deleteItem}
       onLongPress={() => access && setDeleteItem(true)}
-      style={styles.imagebox}
+      // eslint-disable-next-line react-native/no-inline-styles
+      style={[styles.imagebox, { height: resizeImg ? 600 : 400 }]}
     >
       {resizeImg ? (
         <Flex style={styles.resizeImg} center abs>
@@ -72,9 +77,7 @@ const PhotoItem = ({ item, data }: Props) => {
 const styles = StyleSheet.create({
   imagebox: {
     width: '100%',
-    height: 400,
     marginBottom: 20,
-    backgroundColor: colors.SECOND20,
     position: 'relative',
   },
   image: {
@@ -94,9 +97,6 @@ const styles = StyleSheet.create({
   },
   resizeImg: {
     inset: 0,
-    overflow: 'hidden',
-    borderColor: colors.SECOND,
-    borderWidth: 2,
   },
 });
 
