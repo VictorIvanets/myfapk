@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Image, StyleSheet } from 'react-native';
+import { ActivityIndicator, Animated, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamListT } from 'src/Navigatior/route';
@@ -20,6 +20,27 @@ const Splash = () => {
   const navigation = useNavigation<NavigationT>();
   const [sever, setServer] = useState<string>();
   const { navigate } = useAppNavigation();
+  const animatedSize = new Animated.Value(1);
+  const animatedOpacity = new Animated.Value(1);
+  const animatedOpacityNull = new Animated.Value(0);
+
+  const welcomeAnimation = (callback?: () => Promise<void>) => {
+    Animated.timing(animatedSize, {
+      toValue: 50,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(animatedOpacityNull, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(animatedOpacity, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start(callback);
+  };
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -58,19 +79,34 @@ const Splash = () => {
       }
     };
 
-    sever && checkAuth();
+    sever && welcomeAnimation(checkAuth);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigation, sever]);
 
   return (
-    <Flex flex center style={styles.container}>
-      <Image
-        source={require('../../../assets/images/logoMf-01.png')}
-        style={styles.image}
-      />
-      <Flex>
+    <Flex flex style={styles.container}>
+      <Animated.View
+        style={{
+          transform: [{ scale: animatedSize }],
+          opacity: animatedOpacity,
+        }}
+      >
+        <Image
+          source={require('../../../assets/images/logoMf-01.png')}
+          style={styles.image}
+        />
+      </Animated.View>
+      <Animated.View style={{ opacity: animatedOpacity }}>
         <ActivityIndicator size={100} color={colors.ACCENT} />
         <Text>Server not available yet. Please wait</Text>
-      </Flex>
+      </Animated.View>
+      <Animated.View
+        style={[styles.greeting, { opacity: animatedOpacityNull }]}
+      >
+        <Flex flex>
+          <Text size="Bh1">WELCOME</Text>
+        </Flex>
+      </Animated.View>
       <Flex>
         <ScaleInPressable onPress={() => navigate('Rules')}>
           <MaterialIcons name="info-outline" size={50} color={colors.ACCENT} />
@@ -93,5 +129,8 @@ const styles = StyleSheet.create({
     width: 220,
     height: 110,
     resizeMode: 'contain',
+  },
+  greeting: {
+    position: 'absolute',
   },
 });
