@@ -10,6 +10,7 @@ import Navigator from './Navigatior';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Toast from 'react-native-toast-message';
 import toastConfig from './helpers/toastConfig';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 changeNavigationBarColor(COLOR.MAIN, false);
 
@@ -20,28 +21,33 @@ function App() {
   const queryClient = new QueryClient();
 
   return (
-    <Flex style={styles.container}>
-      <StatusBar backgroundColor={COLOR.MAIN} barStyle="light-content" />
-      <QueryClientProvider client={queryClient}>
-        <NavigationContainer
-          ref={navigationRef}
-          onReady={() => {
-            routeNameRef.current =
-              navigationRef.current?.getCurrentRoute()?.name;
-          }}
-          onStateChange={() => {
-            const currentRouteName =
-              navigationRef.current?.getCurrentRoute()?.name;
-            if (currentRouteName && routeNameRef.current !== currentRouteName) {
-              routeNameRef.current = currentRouteName;
-            }
-          }}
-        >
-          <Navigator />
-        </NavigationContainer>
-        <Toast config={toastConfig} />
-      </QueryClientProvider>
-    </Flex>
+    <SafeAreaProvider>
+      <Flex style={styles.container}>
+        <StatusBar backgroundColor={COLOR.MAIN} barStyle="light-content" />
+        <QueryClientProvider client={queryClient}>
+          <NavigationContainer
+            ref={navigationRef}
+            onReady={() => {
+              routeNameRef.current =
+                navigationRef.current?.getCurrentRoute()?.name;
+            }}
+            onStateChange={() => {
+              const currentRouteName =
+                navigationRef.current?.getCurrentRoute()?.name;
+              if (
+                currentRouteName &&
+                routeNameRef.current !== currentRouteName
+              ) {
+                routeNameRef.current = currentRouteName;
+              }
+            }}
+          >
+            <Navigator />
+          </NavigationContainer>
+          <Toast topOffset={3} config={toastConfig} />
+        </QueryClientProvider>
+      </Flex>
+    </SafeAreaProvider>
   );
 }
 

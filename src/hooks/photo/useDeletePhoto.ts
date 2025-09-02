@@ -7,7 +7,15 @@ const useDeletePhoto = (id: string) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: photoServices.deletePhoto,
+    mutationFn: async (photoId: { photoId: string; setId: string }) => {
+      Toast.show({
+        type: 'loadingToast',
+        text1: 'Видалення…',
+        autoHide: false,
+      });
+
+      return await photoServices.deletePhoto(photoId);
+    },
     onSuccess() {
       Toast.show({
         type: 'succssesToast',

@@ -9,6 +9,7 @@ import { useAppNavigation } from 'src/hooks/useAppNavigation';
 import { colors } from 'src/theme/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 type Props = {
   userInfo: UserInfoT | undefined;
@@ -25,6 +26,13 @@ const Header = ({ userInfo }: Props) => {
   const checkRules = async () => {
     const res = await AsyncStorage.getItem('rules');
     setRulesVal(res);
+    if (res === null) {
+      Toast.show({
+        type: 'succssesToast',
+        text1: 'Натисніть на логотип',
+        text2: 'щоб ознайомитися з правилами',
+      });
+    }
   };
 
   useFocusEffect(
