@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Animated, Image, StyleSheet } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ActivityIndicator, Image, Pressable, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamListT } from 'src/Navigatior/route';
@@ -13,6 +13,12 @@ import Text from 'src/components/Text';
 import ScaleInPressable from 'src/components/ScaleInPressable';
 import { useAppNavigation } from 'src/hooks/useAppNavigation';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 type NavigationT = StackNavigationProp<RootStackParamListT>;
 
@@ -20,27 +26,31 @@ const Splash = () => {
   const navigation = useNavigation<NavigationT>();
   const [sever, setServer] = useState<string>();
   const { navigate } = useAppNavigation();
-  const animatedSize = new Animated.Value(1);
-  const animatedOpacity = new Animated.Value(1);
-  const animatedOpacityNull = new Animated.Value(0);
+  const animatedSize = useSharedValue(1);
+  const animatedOpacity = useSharedValue(1);
+  const animatedOpacityNull = useSharedValue(0);
 
-  const welcomeAnimation = (callback?: () => Promise<void>) => {
-    Animated.timing(animatedSize, {
-      toValue: 50,
-      duration: 500,
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(animatedOpacityNull, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(animatedOpacity, {
-      toValue: 0,
-      duration: 500,
-      useNativeDriver: true,
-    }).start(callback);
-  };
+  const welcomeAnimation = useCallback(
+    (callback: () => void) => {
+      animatedSize.value = withTiming(50, { duration: 500 });
+      animatedOpacityNull.value = withTiming(1, { duration: 500 });
+      animatedOpacity.value = withTiming(0, { duration: 500 }, () =>
+        runOnJS(callback)(),
+      );
+    },
+    [animatedOpacity, animatedOpacityNull, animatedSize],
+  );
+
+  const animatedStyleSize = useAnimatedStyle(() => ({
+    transform: [{ scale: animatedSize.value }],
+    opacity: animatedOpacity.value,
+  }));
+  const animatedStyleOpacity = useAnimatedStyle(() => ({
+    opacity: animatedOpacity.value,
+  }));
+  const animatedStyleOpacityNull = useAnimatedStyle(() => ({
+    opacity: animatedOpacityNull.value,
+  }));
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -78,31 +88,24 @@ const Splash = () => {
         });
       }
     };
-
     sever && welcomeAnimation(checkAuth);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigation, sever]);
+  }, [sever, navigation, welcomeAnimation]);
 
   return (
     <Flex flex style={styles.container}>
-      <Animated.View
-        style={{
-          transform: [{ scale: animatedSize }],
-          opacity: animatedOpacity,
-        }}
-      >
-        <Image
-          source={require('../../../assets/images/logoMf-01.png')}
-          style={styles.image}
-        />
+      <Animated.View style={animatedStyleSize}>
+        <Pressable onPress={() => welcomeAnimation(() => console.log('PRESS'))}>
+          <Image
+            source={require('../../../assets/images/logoMf-01.png')}
+            style={styles.image}
+          />
+        </Pressable>
       </Animated.View>
-      <Animated.View style={{ opacity: animatedOpacity }}>
+      <Animated.View style={animatedStyleOpacity}>
         <ActivityIndicator size={100} color={colors.ACCENT} />
         <Text>Server not available yet. Please wait</Text>
       </Animated.View>
-      <Animated.View
-        style={[styles.greeting, { opacity: animatedOpacityNull }]}
-      >
+      <Animated.View style={[styles.greeting, animatedStyleOpacityNull]}>
         <Flex flex>
           <Text size="Bh1">WELCOME</Text>
         </Flex>
