@@ -4,21 +4,17 @@ import { saveState } from 'src/api/storage';
 import { loginServices } from 'src/services/Login.services';
 import type { LoginPayloadT } from 'src/types/auth.types';
 import { useAppNavigation } from '../useAppNavigation';
-import { Alert } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 const useLogIn = () => {
   const mutation = useMutation({
     mutationFn: loginServices.login,
     onError: error => {
-      Alert.alert(
-        'ERROR',
-        error.message,
-        [
-          { text: 'OK', onPress: () => console.log(error.message) },
-          { text: 'Скасувати', style: 'cancel' },
-        ],
-        { cancelable: true },
-      );
+      Toast.show({
+        type: 'errorToast',
+        text1: 'Помилка входу!',
+        text2: error.message,
+      });
     },
   });
   const { mutate, isPending, error, isError } = mutation;
@@ -27,6 +23,11 @@ const useLogIn = () => {
   const logIn = (payload: LoginPayloadT) => {
     mutate(payload, {
       onSuccess(response) {
+        Toast.show({
+          type: 'succssesToast',
+          text1: 'З поверненням',
+          text2: response.login,
+        });
         navigation.navigate('HomeTabs');
         saveState(response, STORAGE_KEYS_ACCESS_TOKEN);
       },

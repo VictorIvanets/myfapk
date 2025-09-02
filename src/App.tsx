@@ -8,6 +8,8 @@ import Flex from './components/Flex';
 import type { RootStackParamListT } from './Navigatior/route';
 import Navigator from './Navigatior';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Toast from 'react-native-toast-message';
+import toastConfig from './helpers/toastConfig';
 
 changeNavigationBarColor(COLOR.MAIN, false);
 
@@ -37,6 +39,7 @@ function App() {
         >
           <Navigator />
         </NavigationContainer>
+        <Toast config={toastConfig} />
       </QueryClientProvider>
     </Flex>
   );
