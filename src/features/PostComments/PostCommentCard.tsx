@@ -16,7 +16,7 @@ interface CardProps {
 }
 const PostCommentCard = ({ item, postId }: CardProps) => {
   const [deleteItem, setDeleteItem] = useState(false);
-  const { deleteComment } = useDeletePostComment(item.postId);
+  const { deleteComment } = useDeletePostComment(item.postId, setDeleteItem);
   const access = useCheckAccess(item.useId);
 
   const delComment = () => {

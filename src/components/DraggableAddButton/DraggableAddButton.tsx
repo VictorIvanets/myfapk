@@ -83,11 +83,6 @@ const DraggableAddButton = ({
         onPress={() => {
           setAddView(!addView);
         }}
-        // onPress={() => {
-        //   if (!movedRef.current) setAddView(!addView);
-        //   movedRef.current = false;
-        // }}
-        // hitSlop={5}
       >
         <Animated.View style={styles.addbox}>
           <MaterialIcons name="post-add" size={36} color={colors.WHITE} />
@@ -106,6 +101,8 @@ const styles = StyleSheet.create({
     borderRadius: 9999,
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor: colors.SECOND20,
+    borderWidth: 2,
   },
 });
 
